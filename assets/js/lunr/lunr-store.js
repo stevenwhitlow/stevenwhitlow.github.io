@@ -1,8 +1,8 @@
 var store = [{
         "title": "Latent Dirichlet Allocation",
-        "excerpt":"Text as data Two primary issues: Converting text data into something we can apply statistical methods to Dealing with the high dimensonality inherent in text data In the literature, a textual dataset is known as a corpus. Each corpus is composed of \\(D\\) documents: \\(d \\in {1,...,D}\\). Each document is...","categories": ["projects"],
+        "excerpt":"Text as data Two primary issues: Converting text data into something we can apply statistical methods to Dealing with the high dimensonality inherent in text data In the literature, a textual dataset is known as a corpus. Each corpus is composed of \\(D\\) documents: \\(d \\in {1,...,D}\\). Each document is...","categories": ["blog"],
         "tags": [],
-        "url": "/projects/latent-dirichlet-allocation/",
+        "url": "/blog/latent-dirichlet-allocation/",
         "teaser": null
       },{
         "title": "Foo Bar Identity",

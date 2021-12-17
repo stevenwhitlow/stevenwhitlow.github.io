@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
-<loc>/projects/latent-dirichlet-allocation/</loc>
+<loc>/blog/latent-dirichlet-allocation/</loc>
 <lastmod>2021-11-14T01:10:56-05:00</lastmod>
 </url>
 <url>
 <loc>/projects/foo-bar-website/</loc>
-<lastmod>2021-12-17T17:19:43-05:00</lastmod>
+<lastmod>2021-12-17T18:34:59-05:00</lastmod>
 </url>
 <url>
 <loc>/projects/self-selection/</loc>
@@ -20,16 +20,10 @@
 <loc>/about/</loc>
 </url>
 <url>
-<loc>/blah/</loc>
-</url>
-<url>
 <loc>/categories/</loc>
 </url>
 <url>
 <loc>/collection-archive/</loc>
-</url>
-<url>
-<loc>/_pages/foo-bar-website/</loc>
 </url>
 <url>
 <loc>/</loc>
