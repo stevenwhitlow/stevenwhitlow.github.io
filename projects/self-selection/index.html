@@ -1,0 +1,601 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Self-selection of workers across U.S. states - Steven Whitlow</title>
+<meta name="description" content="In this project I examine patterns of immigration in the US and the resulting effect on the locational choices of workers who are born in the US. I implement a regression specification to study the impact of immigration at the state level while correcting for selection into states using a semiparametric two-step method. I find that correcting for selection is important for causal inference in this context, increasing the estimated wage elasticity of immigration by at least 30 percent. This illustrates the potential importance of selection in causal inference when using nonrandomized data.">
+
+
+  <meta name="author" content="Steven Whitlow">
+  
+  <meta property="article:author" content="Steven Whitlow">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Steven Whitlow">
+<meta property="og:title" content="Self-selection of workers across U.S. states">
+<meta property="og:url" content="/projects/self-selection/">
+
+
+  <meta property="og:description" content="In this project I examine patterns of immigration in the US and the resulting effect on the locational choices of workers who are born in the US. I implement a regression specification to study the impact of immigration at the state level while correcting for selection into states using a semiparametric two-step method. I find that correcting for selection is important for causal inference in this context, increasing the estimated wage elasticity of immigration by at least 30 percent. This illustrates the potential importance of selection in causal inference when using nonrandomized data.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2018-08-04T02:10:56-04:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="/projects/self-selection/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Steven Whitlow",
+      "url": "/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Steven Whitlow Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+<meta name='robots' content='noindex,nofollow' />
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="/"><img src="/assets/img/title.png" alt=" "></a>
+        
+        <a class="site-title" href="/">
+           
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/#about">About</a>
+            </li><li class="masthead__menu-item">
+              <a href="/#projects">Projects</a>
+            </li><li class="masthead__menu-item">
+              <a href="/#blog">Blog</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="/">
+        <img src="/assets/img/avatar.png" alt="Steven Whitlow" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="/" itemprop="url">Steven Whitlow</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Quantitative social scientist</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">Canada</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="mailto:16sjw@queensu.ca" rel="nofollow noopener noreferrer me"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email me</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/stevenwhitlow" rel="nofollow noopener noreferrer me"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+  
+  </div>
+
+
+
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Self-selection of workers across U.S. states">
+    <meta itemprop="description" content="In this project I examine patterns of immigration in the US and the resulting effect on the locational choices of workers who are born in the US. I implement a regression specification to study the impact of immigration at the state level while correcting for selection into states using a semiparametric two-step method. I find that correcting for selection is important for causal inference in this context, increasing the estimated wage elasticity of immigration by at least 30 percent. This illustrates the potential importance of selection in causal inference when using nonrandomized data.">
+    <meta itemprop="datePublished" content="2018-08-04T02:10:56-04:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title p-name" itemprop="headline">
+            <a href="/projects/self-selection/" class="u-url" itemprop="url">Self-selection of workers across U.S. states
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-keyboard"></i> On this page</h4></header>
+              <ul class="toc__menu"><li><a href="#selection">Selection</a></li><li><a href="#technical-details">Technical details</a><ul><li><a href="#regression-specification">Regression specification</a></li><li><a href="#causal-identification">Causal identification</a></li></ul></li><li><a href="#results">Results</a></li></ul>
+
+            </nav>
+          </aside>
+        
+        <p><em>See the full paper associated with this project <a href="/assets/pdf/self_selection.pdf">here</a>.</em></p>
+
+<p><em>See the code on GitHub.</em></p>
+
+<p>In this project I examine patterns of immigration in the US and the resulting effect on the locational choices of workers who are born in the US, implementing a standard specification to study the impact of immigration on workers’ wages at the state level while correcting for selection into states using a semiparametric two-step method.</p>
+
+<p>Correcting for selection results in an increase in the estimated wage elasticity by 30 to 90 percent, depending on specification. This is driven by the fact that the workers who choose to live in areas with large immigrant populations tend to have high <strong>latent ability</strong>: they earn wages higher than what would be expected by their education. This ability is “latent” because in many datasets the only explicit measure of worker ability is their level of education.</p>
+
+<p>The upshot is that after accounting for the impact of workers’ location choices, regression results estimated at a regional level can be reconciled with those at the national level.</p>
+
+<h2 id="selection">Selection</h2>
+
+<p>There’s been a large amount of research on the effect that immigration has on the location choice of natives. Most of this have focused on how these inflows effect the skill mix of local labour markets. If immigrant inflows are relatively less educated – as is the case in the US context but not in other countries like Canada or Australia – economic theory would suggest that wages would decrease within local labour markets for non-college workers, and consequently net inflows of non-college native-born workers to immigrant destination cities will decrease as alternative locations become relatively more attractive. This would result in the negative effect of less educated immigration on less educated natives being biased downward in absolute magnitude, since this effect is essentially being diffused across the country. However, there is not yet a consensus on either the extent or existence of this native migration response.</p>
+
+<p>How might this migration response vary across the native-born wage distribution? Perhaps, due to occupational licensing requirements or similar issues, immigrants cannot take full advantage of their human capital and work in the occupation that is the best fit for them.</p>
+
+<p>This might lead us to expect downgrading to be a phenomenon which is strongest among high skill immigrants. To examine this further, I use data from the 1970-2000 Censuses and 2008-2010 ACS.</p>
+
+<details class="notice"><summary>Detailed description of data cleaning process</summary>
+The data used in this paper are sourced from the 1960, 1970, 1980, 1990, and 2000 U.S. Decennial Census Public Use Microdata Samples (PUMS), and the 2008-2010 3-year American Community Survey (ACS), downloaded from the IPUMS website. For brevity, I refer to the ACS data as the 2010 data. For my regressions, I use the data for the 1970-2010 data; the 1960 data is used only for construction of the shift-share IV instrument. My sample consists of men aged 18-64 who participate in the labour force and worked a positive number of weeks in the previous year, do not live in group quarters, and are not in school or the military. The removal of women from the sample is driven by the fact that in the earliest sample years, women were more likely to have low labour force attachment, which may result in the locational choice decision being less driven by their own comparative advantage in the job market. <br /> <br />
+
+To prevent my results from being driven by outliers, I remove from the sample workers whose income, usual hours worked, and weeks worked last year imply an hourly wage less than 75% of the prevailing federal minimum wage. <br /> <br />
+
+Workers are grouped into four education categories: high school dropouts, high school graduates, workers with some college education, and college graduates. I define the "some college" category as workers who do not have a bachelor's degree, but have one full year to four years of college education. Potential experience is then calculated based on subtracting the worker's age from the age they are assumed to enter the labour market: 17 for high school dropouts, 18 for high school graduates, 21 for workers with some college education and 23 for college graduates. Workers are then grouped into experience groups based on their potential experience. The finest experience grouping consists of four 10-year bands, starting with one to ten years of potential experience and ending with 31 to 40 years. Coarser experience groupings are constructed by combining these into two 20-year bands.  <br /> <br />
+
+Workers are defined as "natives" if they are neither naturalized U.S. citizens or non-U.S. citizens and "foreign-born" otherwise. $N_{skrt}$ and $M_{skrt}$, respectively the total native and foreign-born labour supplied within a given state-education-experience cell, are calculated by aggregating the total labour hours supplied by each worker in the previous year, adjusting for their Census personal sample weight. Total labour hours supplied is calculated by multiplying the number of weeks worked last year by the worker's usual number of hours worked in a week. These are then used to calculate the foreign-born share of each state-education-experience cell, which is given by $\Upsilon_{s,k,r,t}$. <br /> <br />
+
+Following the literature, I use a more selective sample in my wage regressions than in determining the measure of immigrant competition: I drop those workers who worked less than 27 weeks of work the previous year and those who typically work less than 35 hours a week, preventing my results from being driven by workers who have weak labour market attachments entering or leaving the labour market. I also drop all self-employed workers. My dependent variable is log weekly wages; an individual's wage is calculated by dividing their annual income by the number of weeks they work in a year. Wages in each year are deflated using the relevant values of the CPI (all items) and adjusted for Census topcoding; topcoded wages are multiplied by 1.5. All regression results below are weighted by the appropriate Census personal sample weight. Weighting the regressions by the Census personal sample weight results in lesser weight towards cells with smaller populations, reducing the potential for measurement error in the measure of immigrant density.
+</details>
+
+<p>The figure below shows the relative density of immigrants along the wage distribution of natives <strong>within</strong> state-experience cells separately by education level, averaged across all years. The panel on the right consists of workers who have completed at least two years of college education, and the left consists of workers who do not.</p>
+
+<figure class="">
+  <img src="/assets/img/self-select/imm_wage_by_education.png" alt="" /></figure>
+
+<p>The red horizontal line represents the native wage distribution; values above it indicate that immigrant workers are more concentrated at a given part of the native-born within-cell wage distribution than native-born workers.</p>
+
+<p>This figure is constructed in the following way:</p>
+
+<ol>
+  <li>
+    <p>First, I construct the percentiles associated with the real weekly wage distribution for native-born workers, within cells delineated by state, education level, experience, and year.<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup></p>
+  </li>
+  <li>
+    <p>Secondly, I calculate the percentage of immigrant workers falling within each percentile of the relevant distribution across all years. The figure itself is a lowess-smoothed plot of the densities with a bandwith of 0.1 and the top and bottom 2 percentiles omitted, so each combination of state-education-experience-year has 96 observations.<sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup></p>
+  </li>
+</ol>
+
+<p>If the phenomenon of immigrant downgrading in the United States was primarily driven by highly educated immigrants working in low-wage jobs, we would expect to see high-skill immigrants being more concentrated at the lower end of the native-born within-cell wage distribution, but the opposite is the case here. Foreign-born workers with less education are far more clustered at the low end of the native-born within-cell wage distribution than those who are highly educated.  The relative density of less educated workers at the very bottom of the native-born wage distribution is about twice that of native-born workers. Not only is the proportion of college-educated foreign-born workers at the bottom of the wage distribution in their regional skill cell lower, the relative density is a U-shape, with highly educated immigrants being overrepresented at the very top of the college-educated wage distribution.</p>
+
+<p>To the extent that workers born in the US are responsive to immigration, the group of natives who change their work or location choices in response to immigration are likely to be self-selected.  This would lead to bias in estimates of the labour market impact of immigration that exploit any kind of spatial variation.<sup id="fnref:3" role="doc-noteref"><a href="#fn:3" class="footnote" rel="footnote">3</a></sup></p>
+
+<h2 id="technical-details">Technical details</h2>
+
+<h3 id="regression-specification">Regression specification</h3>
+
+<p>A regression equation using individual-level data to estimate the wage impact of immigration while allowing for imperfect substitution between workers of the same education but differing experience is:</p>
+
+\[\begin{align}w_{i} &amp;= w_{srkt} + u_{i} \nonumber \\
+w_{i} &amp;= \alpha_0 + \gamma \Upsilon_{skrt} + \alpha_{1}(s) + \alpha_{2}(r) + \alpha_{3}(k) + \alpha_{4}(t) + \alpha_{5}(k,t) + \alpha_{6}(s,t)\\
+&amp;+ \alpha_{7}(r,t) + \alpha_{8}(k,s) + \alpha_{9}(k,s,r) + u_{i} \nonumber\end{align}\]
+
+<p>where $w_{srkt}$ represents the average log wage of education group $s$ with <em>potential</em> experience $r$, living in state $k$ at time $t$, and $\alpha(\cdot)$ represent fixed effects. $u_{i}$ is an individual-level error term. The estimate of the wage impact of immigrant competition is $\gamma$, which is the coefficient associated with $\Upsilon_{skrt}$ – the percentage share of foreign-born workers in skill group-state-time cell $(s,r,k,t)$.</p>
+
+<p>The specification includes a full set of education, experience group, state, and time fixed effects, as well as several interaction terms. The first set of interaction terms – $\alpha_5$, $\alpha_6$, and $\alpha_7$ – control for changes over time in state-specific productivity, the return to schooling, and the experience wage profile. Differences in state-specific returns to education are encompassed by $\alpha_8$, and $\alpha_9$ allows the experience wage profile within an state to vary by schooling group. Thus, after including the full set of fixed effects and interaction terms $\alpha_{1},\ldots,\alpha_{9}$, the variation in $w_{srkt}$ left over for identification of $\gamma$ are <em>changes over time</em> in education-experience-state cells $(s,r,k)$, making this a <strong>difference-in-difference-in-differences</strong> linear regression model.<sup id="fnref:4" role="doc-noteref"><a href="#fn:4" class="footnote" rel="footnote">4</a></sup></p>
+
+<h3 id="causal-identification">Causal identification</h3>
+
+<p>Isolating causal effects in this context because the treatment could potentially impact both workers’ wages and location choices. Workers’ wages are only observed for the state in which they currently live and work, which can result in <strong>selection bias</strong>.</p>
+
+<p>In the context of linear regression, the error term $u_{i}$ is assumed to be mean-zero. However, in general, in the presence of selection bias, $\mathbb{E}(u_i) \neq 0$ since workers will tend to choose to live in states that provide them better economic opportunites. Decomposing the error term into terms with nonzero and zero expectation:</p>
+
+\[\begin{align*}
+u_{i} &amp;= \underbrace{\mathbb{E}\left[u_{ik}|d_{ijk}=1\right]}_{\text{Selection bias}} + \omega_{i},
+\end{align*}\]
+
+<p>where the selection bias associated with individual $i$ is an expectation that is conditioned on the binary variable $d_{ijk}$, which takes value 1 when the individual is born in state $j$ and is observed as living in state $k$. I model this expecation through a a <strong>control function</strong> as follows:</p>
+
+\[\begin{align}
+\mathbb{E}\left[u_{ik}|d_{ijk}=1\right] &amp;= \psi(p_{ijk},p_{ijj}). 
+\end{align}\]
+
+<p>The control function $\psi(p_{ijk},p_{ijj})$ depends only on an individual’s probability of moving to the state where they are actually observed, $p_{ijk}$, and their probability of staying in their state of birth $p_{ijj}$. If an individual stays in their state of birth, then $p_{ijk}=p_{ijj}$ and their control function depends on only one migration probability. I calculate these probabilities based on workers’ observed demographic characteristics, including their education and state of birth. I then insert this control function as an additional variable into the regression model (1) above.</p>
+
+<p>Identification depends on an <strong>exclusion restriction</strong>: including variables that shift the probability of a worker moving to a state but having no effect on state-specific wages. Here, identification is driven by the inclusion of state of birth when calculating the probability of residing in a state. The intuitive explanation of this assumption can be given as follows: workers with identical characteristics who were born in different states but currently both live in state \(k\) should earn the same amount except if they differ in latent ability. For instance, take two workers living in Arizona with identical observed characteristics, except for state of birth: one worker was born there and the other in Vermont. If the worker from Vermont has higher wages, we can conclude that Arizona provided them with a better job “match” that incentivized them to move a greater distance.</p>
+
+<h2 id="results">Results</h2>
+
+<p>My results suggest that self-selection due to native locational decisions is largely responsible for disparities in estimates of the wage effects of immigration. The three key takeaways from this project are:</p>
+
+<ol>
+  <li>Foreign-born workers with less education are much more likely to work in jobs that pay less than others worked in by those with similar training.</li>
+  <li>The results suggest that state level studies that use coarse skill groups and include a correction for self-selection into states can provide estimates of the impact of immigration on wages of native-born workers that are similar to those that use a national time series.</li>
+  <li>This is driven by the fact that states that attract large numbers of foreign-born workers also attract workers with high latent ability.</li>
+</ol>
+
+<p>The table below includes ordinary least squares estimates from equation (1) as well as instrumental variable estimates using an enclave shift-share instrument for the foreign-born density (see the relevant section on page 22 of the <a href="/assets/pdf/self_selection.pdf">full paper</a> for details). The instrument does well in the first stage in predicting actual immigrant densities.</p>
+
+<p>To the extent that immigrants tend to self-select into states with favourable economic conditions, we would expect to see the magnitude of estimates increase after instrumenting the immigrant density, which is the case here. However, the relative increases in the coefficient are higher after correcting for selection bias.</p>
+
+<center>
+<table>
+    <thead>
+        <tr>
+            <th colspan="4" style="text-align: center">Size of estimated coefficient relative to uncorrected ordinary least    squares estimates</th>
+        </tr>   
+        <tr>
+            <th style="text-align: center">Selection corrected</th>
+            <th style="text-align: center">Control function type</th>
+            <th style="text-align: center">OLS</th>
+            <th style="text-align: center">IV </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td style="text-align: center">No</td>
+            <td style="text-align: center">--</td>
+            <td style="text-align: center">Baseline</td>
+            <td style="text-align: center">1.21x</td>
+        </tr>
+    </tbody>
+    <tbody>
+        <tr>
+            <td style="text-align: center">Yes</td>
+            <td style="text-align: center">Core correction terms</td>
+            <td style="text-align: center">1.31x</td>
+            <td style="text-align: center">1.71x</td>
+        </tr>
+    </tbody>
+    <tbody>
+        <tr>
+            <td style="text-align: center">Yes</td>
+            <td style="text-align: center">Additional correction terms</td>
+            <td style="text-align: center">1.37x</td>
+            <td style="text-align: center">1.92x</td>
+        </tr>
+    </tbody>
+    <tbody>
+        <tr>
+            <td style="text-align: center">Yes</td>
+            <td style="text-align: center">Time-varying correction terms</td>
+            <td style="text-align: center">1.76x</td>
+            <td style="text-align: center">2.30x</td>
+        </tr>
+    </tbody>
+</table></center>
+
+<p>With this selection correction method, there are multiple correction terms, so a Wald test for joint significance of all correction terms is a test against the null hypothesis of no selection, analogous to testing the significance of the coefficient on the inverse Mills ratio term in a standard Heckman correction. I find that the selection terms are jointly highly significant in all regressions.</p>
+
+<p>Examining the distribution of the expected selection bias across states, I conclude that the disparity in results across different studies is due to an increase in the latent ability of native-born workers who choose to live in states which also attract large numbers of foreign-born workers.</p>
+
+<p>Since I am particularly interested in the relationship between unobserved ability and the probability of choosing to live in immigrant-intensive states, I add quadratics in the highest five estimated probabilities of moving to one of the 15 states with the highest density of f foreign-born workers, excluding those where this probability is either the state of birth or residence. This allows for the selection bias of workers who are born and live inside and outside immigrant-intensive states to vary based on their observed probability of moving to immigrant-intensive states. The results are included in the third row of the table.</p>
+
+<p>As patterns of internal migration have changed over time and immigrant inflows into the U.S. have also been increasing during the time period under consideration, it is important to verify that the increase in the estimated effect of immigration after correcting for selection is actually a result of selection pressures being different in immigrant intensive states. The bottom column includes a time-varying control function, which I implement by interacting each term of the control function with decade indicator variables.</p>
+
+<p>The graph below plots the change in the estimate of the mean selection bias among native stayers from 1970-2010 against the change in immigrant density in the same time period. This figure suggests that the selection bias of $\gamma$ is driven by <em>increases</em> in the degree of selection of workers who choose to live in their state of birth.</p>
+
+<figure class="">
+  <img src="/assets/img/self-select/change_latent_ability.png" alt="" /></figure>
+
+<details class="notice"><summary>Detailed description of control function estimates</summary>
+The change in the estimates is driven by differential increases in mean values of the control function (the selectivity bias) across the 15 states with the highest levels of immigration ("intensive states") and the other 35 states. <br /> <br />
+ 
+The relative increase in the value of the control function for "stayers" (native-born workers who stay in their state of birth) with mean values of staying probabilities from 1970 to 2010 was 6.22 log points across all skill groups. This is based on mean staying probabilities of 76.0 percent in 1970 and 65.9 percent in 2010 for intensive states, and 65.9 percent and 66.4 percent for other states, calculated using Census person weights.  <br /><br />
+
+For some states this is even higher: the gap in the value of the control function between California and non-immigrant intensive states decreased by 13.02 log points during the same period. This is based on staying probabilities across all skill groups in California decreasing from 84.7 percent in 1970 to 68.6 percent in 2010.
+</details>
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:1" role="doc-endnote">
+      <p>Education and work experience are divided into two categories each. I then calculate the percentage of immigrants falling within each percentile across all years. <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:2" role="doc-endnote">
+      <p>Since I am looking within state-skill cells, this will control for the tendency of immigrants to be located in states with both high wages and high costs of living. <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:3" role="doc-endnote">
+      <p>Although the fact that less educated immigration to the US disproportionately consists of high school dropouts would lead us to expect that less educated immigrants to be overrepresented at the low end of the less educated wage distribution, the fact that the relative density of less educated immigrants is essentially strictly decreasing in wage leads one to believe that downgrading of immigrants who are high school graduates is a quantitatively important phenomenon. <a href="#fnref:3" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:4" role="doc-endnote">
+      <p>An alternative approach is to omit the last interaction term, $\alpha_9$, in which case identification is driven by changes over time in the wages of education-state groups. <a href="#fnref:4" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#projects" class="page__taxonomy-item p-category" rel="tag">projects</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2018-08-04T02:10:56-04:00">August 4, 2018</time></p>
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/projects/foo-bar-website/" class="pagination--pager" title="Foo Bar Identity
+">Previous</a>
+    
+    
+      <a href="/projects/fuzzy-classification-occupations/" class="pagination--pager" title="Fuzzy classification of occupational tasks
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2021 Steven Whitlow. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+         
+
+<script type="text/javascript" async
+	src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_HTMLorMML">
+</script>
+
+<script type="text/x-mathjax-config">
+   MathJax.Hub.Config({
+     extensions: ["tex2jax.js"],
+     jax: ["input/TeX", "output/HTML-CSS"],
+     tex2jax: {
+       inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+       displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+       processEscapes: true
+     },
+     "HTML-CSS": {
+        availableFonts : ["STIX"],
+        preferredFont : "STIX",
+        webFont : "STIX-Web",
+        imageFont : null
+    },
+    TeX: { equationNumbers: { autoNumber: "AMS" } }
+   });
+</script>
+
+  </body>
+</html>

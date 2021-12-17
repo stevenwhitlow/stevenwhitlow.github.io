@@ -1,0 +1,590 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Fuzzy classification of occupational tasks - Steven Whitlow</title>
+<meta name="description" content="I build a Grade of Membership (GoM) model to classify occupations based on the skills and tasks they require in day-to-day work. GoM models are an alternative to traditional approaches like $k$-means clustering or PCA which produce “fuzzy” classifications in which occupations can be considered as partial members of multiple groups.">
+
+
+  <meta name="author" content="Steven Whitlow">
+  
+  <meta property="article:author" content="Steven Whitlow">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Steven Whitlow">
+<meta property="og:title" content="Fuzzy classification of occupational tasks">
+<meta property="og:url" content="/projects/fuzzy-classification-occupations/">
+
+
+  <meta property="og:description" content="I build a Grade of Membership (GoM) model to classify occupations based on the skills and tasks they require in day-to-day work. GoM models are an alternative to traditional approaches like $k$-means clustering or PCA which produce “fuzzy” classifications in which occupations can be considered as partial members of multiple groups.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2020-04-24T02:10:56-04:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="/projects/fuzzy-classification-occupations/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Steven Whitlow",
+      "url": "/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Steven Whitlow Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+<meta name='robots' content='noindex,nofollow' />
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="/"><img src="/assets/img/title.png" alt=" "></a>
+        
+        <a class="site-title" href="/">
+           
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/#about">About</a>
+            </li><li class="masthead__menu-item">
+              <a href="/#projects">Projects</a>
+            </li><li class="masthead__menu-item">
+              <a href="/#blog">Blog</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="/">
+        <img src="/assets/img/avatar.png" alt="Steven Whitlow" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="/" itemprop="url">Steven Whitlow</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Quantitative social scientist</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">Canada</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="mailto:16sjw@queensu.ca" rel="nofollow noopener noreferrer me"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email me</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/stevenwhitlow" rel="nofollow noopener noreferrer me"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+  
+  </div>
+
+
+
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Fuzzy classification of occupational tasks">
+    <meta itemprop="description" content="I build a Grade of Membership (GoM) model to classify occupations based on the skills and tasks they require in day-to-day work. GoM models are an alternative to traditional approaches like $k$-means clustering or PCA which produce “fuzzy” classifications in which occupations can be considered as partial members of multiple groups.">
+    <meta itemprop="datePublished" content="2020-04-24T02:10:56-04:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title p-name" itemprop="headline">
+            <a href="/projects/fuzzy-classification-occupations/" class="u-url" itemprop="url">Fuzzy classification of occupational tasks
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-keyboard"></i> On this page</h4></header>
+              <ul class="toc__menu"><li><a href="#the-onet-dataset">The O*NET dataset</a></li><li><a href="#grade-of-membership-classification">Grade of Membership classification</a><ul><li><a href="#technical-definition-of-the-model">Technical definition of the model</a></li><li><a href="#estimation">Estimation</a></li></ul></li><li><a href="#results">Results</a><ul><li><a href="#classification-results">Classification results</a></li><li><a href="#application-wage-changes-after-occupational-switches">Application: Wage changes after occupational switches</a></li></ul></li></ul>
+
+            </nav>
+          </aside>
+        
+        <p><em>See the full paper associated with this project <a href="/assets/pdf/occupation_grade_of_membership.pdf">here</a>.</em></p>
+
+<p><em>See the code on GitHub.</em></p>
+
+<!--A large literature in labour economics examines the returns to job tenure and the degree to which accumulated skills are transferable across different jobs, recognizing that human capital is unlikely to be purely general.-->
+<p>To what degree are accumulated skills are transferable across different jobs? Labour market datasets typically include information on the occupations worked by individuals. 
+<!-- An alternate but related approach to considering human capital as occupation-specific is to treat human capital as being specific to the tasks that are performed on the job.--> The Dictionary of Occupational Titles (DOT) and its successor O*NET are two datasets from the U.S. Department of Labor which provide information on the degree to which different occupations utilize different tasks. A workers’ occupation can be thought of as a noisy proxy for the tasks they perform on the job.</p>
+
+<p>In this post, I describe a <strong>Grade of Membership</strong> (GoM) model to classify occupations. The GoM model is a hierarchical Bayesian model which treats observations as mixtures over a given number of latent extreme types and is part of a larger family of mixed membership models. For example, GoM can be considered a close cousin of such as Latent Dirichlet Allocation, used in document classification; while LDA is applied to counts, such as the number of appearances of a given word in a document, the GoM model focuses on discrete responses to survey data.</p>
+
+<p>GoM models produce fuzzy or <em>soft</em> classifications in which occupations can be considered as partial members of multiple groups.
+Classifications produced by a GoM model are simply point estimates for parameters of a multinomial distribution for each occupation, which have the advantage of being easily interpretable as probabilities. On the other hand, alternate classification methods such as PCA will in general be uninterpretable without adjusting the results – such as rotating the PCA factor loadings – which involves making assumptions about which features are important instead of letting the data speak for itself.</p>
+
+<details class="notice"><summary>More information about the advantages over other approaches</summary>
+Methods using data from O*NET are generally limited in the fact that their task intensity measures are ordinal, since they are based on categorical responses to survey data. One common technique to address this is to replace the task intensity measure for each occupation with its percentile rank; even with this transformation, it's unclear the extent to which one can assess the distance between occupations in terms of task content. By contrast, the GoM results are cardinal measures and sum to one by construction.   <br /> <br />
+
+The results of the GoM model also gives intuitive results without the need to aggregate the descriptors into groups using subjective pre-existing assumptions.
+</details>
+
+<h2 id="the-onet-dataset">The O*NET dataset</h2>
+
+<p>I use data from the Occupational Information Network (O*NET), which collects a wide range of information on occupational characteristics through surveying both individuals working in an occupation as well as professional analysts. I use three of the O*NET files: abilities, skills, and work activities, obtaining 128 features which describe the <strong>task composition</strong> of 968 occupations in the data.<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup></p>
+
+<p>For each task, survey respondents are asked to rate the level of ability required for a given occupation by providing an integer between 1 and 7, where 7 represents the highest level of the task or skill.  O*NET guides responses by labelling three of the possible responses with an example of an action that would require that level of a given skill.</p>
+
+<details class="notice"><summary>Additional questionnaire information</summary>
+Respondents are first asked to rate the degree to which the given task is important for the occupation on a scale ranging from "Not Important" to "Extremely Important". If the respondent ranks the descriptor as "not important", a value of zero is imputed for the respondent for the level of ability in the task.  <br /> <br />
+
+I choose to estimate the model using only the responses for the level category associated with each descriptor.
+</details>
+
+<p>I normalize these ratings by transforming the means of responses into a categorical variable which takes values  $X_{i,j} \in {1, 2, 3}$ based on the position of occupation $i$ in the task-specific distribution of mean level ratings for descriptor $j$. For instance, $X_{i,j}$ would take a value of 1 if occupation $i$ is in the first tercile of mean level ratings for descriptor $j$. The responses for each occupation should thus be interpreted as reflecting the levels of ability in a given skill or task required <strong>relative</strong> to all other occupations in the O*NET data.</p>
+
+<h2 id="grade-of-membership-classification">Grade of Membership classification</h2>
+
+<h3 id="technical-definition-of-the-model">Technical definition of the model</h3>
+
+<p>Occupations are indexed by $i = 1 \ldots, N$ and tasks by $j = 1, \ldots, J$. Denote the vector of responses for occupation $i$ as \(\mathbf{X}_{i} = \{x_{i,1}, \ldots, x_{i,J}\}\). Assume there are $K$ extreme profiles or <em>groups</em> of occupations. Define \(\mathbf{\lambda}_{i} = (\lambda_{i,1}, \ldots, \lambda_{i,K})\) as the latent distribution over extreme profiles for occupation $i$, where $\sum_{k=1}^{K}\lambda_{i,k} = 1$ $\forall$ $i$. Further, let $\theta_{j,k,l}$ be the probability that extreme profile $k$ is associated with response $l$ for task $j$, where \(\mathbf{\theta}_{j,k} = \{\theta_{j,k,1}, \theta_{j,k,2}, \theta_{j,k,3}\}\) is the vector of those probabilities. Evidently, \(\sum_{l=1}^{3}\theta_{j,k,l} = 1\) $\forall$ $j,k$.</p>
+
+<p>Since the GoM model is <strong>generative</strong>, it’s intuitive to describe the model by specifying the hypothetical process through which the data are generated. With the above definitions, we’re now in a position to describe the generative process, which is as follows:</p>
+
+<ol>
+  <li>
+    <p>For each occupation $i$ in the data, $i = 1, \ldots, N$, draw \(\mathbf{\lambda}_{i} \sim \mathrm{Dirichlet}(\mathbf{\alpha})\) where $\mathbf{\alpha} = {\alpha_{1}, \ldots, \alpha_{K}}$.</p>
+  </li>
+  <li>
+    <p>For each occupation $i$ and each task $j$:</p>
+
+    <p>2.1. From the distribution over groups for occupation $i$, draw a group for the task. Formally, let \(_{i,j} \sim \mathrm{ Multinomial }(\mathbf{\lambda}_{i})\). $Z_{i,j}$ represents the group for which occupation $i$ can be associated with with respect to task $j$.</p>
+
+    <p>2.2. From the distribution over responses for that group, draw a response. Formally, let  $X_{i,j} \sim \mathrm{ Multinomial }(\theta_{j,Z_{i,j}})$ be the response for task $j$ associated with occupation $i$.</p>
+  </li>
+</ol>
+
+<h3 id="estimation">Estimation</h3>
+
+<p>Solving the model using maximum likelihood estimation is computationally intractable. Two approaches for approximate inference include Markov Chain Monte Carlo (MCMC) and variational inference.</p>
+
+<p>Here, I’ll describe how to estimate the model using <strong>variational expectation-maximization</strong> algorithm as implemented by the <code class="language-plaintext highlighter-rouge">mixedMem</code> package in R.</p>
+
+<p>The choice of the number of occupational groups, $K$, to use in estimation is a classic model selection problem. To select the number of groups, I divide the data into five folds and perform a cross-validation exercise.</p>
+
+<p>Unfortunately, variational EM algorithm only guarantees convergence to a local mode. In general, the <strong>ELBO</strong> (the lower bound for the log likelihood of the model) is non–convex, so different initializations of $\mathbf{\alpha}$ and $\mathbf{\theta}$ may result in different optima.</p>
+
+<p>The best practice is to try as many initializations as are computationally feasible. In my $k$-fold cross-validation exercise in the next section, I consider 24 different initializations for each fold and each value of $K$. In total, with 24 initialization points, 5 folds, and 6 alternatives for $K$, the cross-validation exercise involves estimating $24\times5\times6=720$ GoM models.</p>
+
+<p>For the cross-validation exercise, since the GoM is an unsupervised model, the value of interest is the held-out ELBO. For each initialization, after obtaining fitted values $\mathbf{\hat{\alpha}}$ and $\mathbf{\hat{\theta}}$, I then calculate the held-out ELBO for fold $f_{test}$ as follows. First, I obtain classifications (formally, the variational parameters) for the occupations in $f_{test}$ by applying a single E-step, holding fixed the estimated $\mathbf{\hat{\alpha}}$ and $\mathbf{\hat{\theta}}$ obtained from the training set. Second, I calculate the ELBO for the occupations in $f_{test}$ using the fitted values from the training set $\mathbf{\hat{\alpha}}$ and $\mathbf{\hat{\theta}}$ and the classifications from the E-step.</p>
+
+<p>I define the held-out ELBO for a given $K$ and fold $f$ as the maximum held-out ELBO across all initializations. The held-out ELBO for a given $K$ is the mean of these maximum held-out ELBO values. See <a href="/assets/pdf/occupation_grade_of_membership.pdf">the associated paper</a> for more information on the cross-validation process. I choose to estimate the model with $K=7$ using the full sample at each of the 24 initializations and select the initialization with the highest ELBO.</p>
+
+<details class="notice"><summary>Advantages of variational inference</summary>
+Variational inference has several advantages relative to MCMC. MCMC tends to be more computationally expensive, especially with large datasets. Secondly, the GoM and other mixed membership models are invariant to label switching (permutations of the group labels). With MCMC, special care must be taken to prevent label switching during estimation, but since variational inference does not rely on sampling from the posterior, the results only depend on the starting values for α and θ, as well as the variational parameters, so the order of the group labels can be ignored.
+</details>
+
+<h2 id="results">Results</h2>
+
+<h3 id="classification-results">Classification results</h3>
+
+<p>The first step in examining the estimated classifications are to assign labels to each group $k$. Since this is an unsupervised learning situation, the assignment of labels to each group is a subjective process. I use both the estimated $\hat{\mathbf{\theta}}$ matrix – the estimated distribution of skill requirements for each group $k$ – as well as the titles of occupations with very high (i.e., close to 100%) degrees of membership in the various groups to assist me.</p>
+
+<ol>
+  <li>
+    <p><b>Scientific</b> occupations are high in their cognitive task requirements, especially in relation to problem solving, but also often require significant ability in manual tasks. <i> Examples: Material engineers, biomedical engineers, physical medicine physicians, soil and plant scientists</i></p>
+  </li>
+  <li>
+    <p><b>Other abstract</b> occupations are high in their cognitive task requirements, but are unlikely to demand skill in manual tasks. <i>Examples: CEOs, lawyers, economists, political scientists</i></p>
+  </li>
+  <li>
+    <p><b>Skilled manual</b> occupations require moderate levels of cognitive skill, but are highly likely to require skill in operating, maintaining, or repairing equipment. <i>Examples: Hydroelectric plant technicians, forest firefighters</i></p>
+  </li>
+  <li>
+    <p><b>Skilled service</b> occupations demand skill in interpersonal tasks and skills such as social perceptiveness or caring for others. <i>Examples: Practical nurses, midwives</i></p>
+  </li>
+  <li>
+    <p><b>Routine cognitive</b> occupations tend to map onto occupations which have been found to high routine cognitive task content, where “routine” tasks are those that can be mapped into a set of rules. <i>Examples: Travel agents, tax preparers, procurement clerk</i></p>
+  </li>
+  <li>
+    <p><b>Low-skill manual</b> occupations require ability in manual tasks, but are less likely to require cognitive task ability or skill in specialized manual tasks such as repairing equipment. <i>Examples: Production workers, rock splitters, insulation workers</i></p>
+  </li>
+  <li>
+    <p><b>Low-skill service</b> occupations have the lowest skill requirements, concentrated in service tasks. <i>Examples: Fast food cooks, orderlies, food servers</i></p>
+  </li>
+</ol>
+
+<h3 id="application-wage-changes-after-occupational-switches">Application: Wage changes after occupational switches</h3>
+
+<p>Let’s examine whether the classification results can help us understand wage changes following job displacement events. How do occupation switches made by workers following a job displacement event map onto changes in wages? To examine the occupation switching patterns of displaced workers, I use the Displaced Worker Supplement (DWS) to the Current Population Survey.<sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup> The DWS is a representative survey from the U.S. that tracks workers who were laid off from their job in the past three years.</p>
+
+<p>For simplicity, I start by turning the soft classification into a hard classification by assigning each occupation into distinct groups based on the highest degree of membership and plot the data using a Sankey diagram.<sup id="fnref:3" role="doc-noteref"><a href="#fn:3" class="footnote" rel="footnote">3</a></sup> The <strong>size</strong> of the flows between primary types reflects the (weighted) share of the total sample that is observed making such a transition. In addition, the flows are <strong>shaded</strong> so as to reflect the average change in wages observed by these workers.</p>
+
+<p><em>Hover over the diagram to learn more!</em></p>
+<iframe height="650px" width="100%" frameborder="no" margin="0" padding="0" overflow-y="hidden" display="block" src="https://swhitlow.shinyapps.io/occupation_changes/"> </iframe>
+
+<p>It’s clear that there is a large degree of movement across groups; however, the extremes of wage changes appear to be driven by movement to and from occupations which are primarily classified as low-skill service. Workers transitioning to low-skill service jobs have steep wage losses, with steep wage gains for workers transitioning away from these jobs.</p>
+
+<p>In <a href="/assets/pdf/occupation_grade_of_membership.pdf">the full paper</a> I examine these wage changes more closely using regression analysis using features derived from the full group membership vectors associated with each workers’ initial and new occupations. I create <em>distance</em> and <em>direction</em> measures associated with occupation switches:</p>
+
+<ol>
+  <li>The distance of an occupational switch is the Hellinger distance between the estimated membership vectors of a workers’ occupations before and after a displacement event.</li>
+  <li>The direction of the switch is based on whether a worker moves down the occupational wage ladder as predicted by the estimated membership vectors. This measure uses results from a secondary regression using a larger sample size of millions of workers in the 2000 U.S. Census.</li>
+</ol>
+
+<p>The results confirm that the GoM classifications using occupational task data can explain large changes in wages following occupation switches.</p>
+
+<!--
+## Conclusion
+
+You’ll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run `jekyll serve`, which launches a web server and auto-regenerates your site when a file is updated.
+
+Jekyll requires blog post files to be named according to the following format:
+
+`YEAR-MONTH-DAY-title.MARKUP`
+
+Where `YEAR` is a four-digit number, `MONTH` and `DAY` are both two-digit numbers, and `MARKUP` is the file extension representing the format used in the file. After that, include the necessary front matter. Take a look at the source for this post to get an idea about how it works.
+
+Jekyll also offers powerful support for code snippets:
+<details>
+  <summary>Code:</summary>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">ggplot</span><span class="p">(</span><span class="n">inner_join</span><span class="p">(</span><span class="n">sankey_data</span><span class="p">,</span><span class="n">mode_and_wage_changes</span><span class="p">),</span><span class="w">
+       </span><span class="n">aes</span><span class="p">(</span><span class="n">axis1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mode_former</span><span class="p">,</span><span class="w">
+           </span><span class="n">axis2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mode_current</span><span class="p">,</span><span class="w">
+           </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">total</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_alluvium</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">change_wage</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_stratum</span><span class="p">(</span><span class="n">alpha</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.1</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_text</span><span class="p">(</span><span class="n">stat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"stratum"</span><span class="p">,</span><span class="w"> 
+            </span><span class="n">label.strata</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">scale_x_discrete</span><span class="p">(</span><span class="n">limits</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"Pre-displacement \n primary type"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Post-displacement \n primary type"</span><span class="p">),</span><span class="w">
+                   </span><span class="n">expand</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">-0.3</span><span class="p">,</span><span class="w"> </span><span class="m">0.3</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">guides</span><span class="p">(</span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">guide_legend</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="n">unname</span><span class="p">(</span><span class="n">TeX</span><span class="p">(</span><span class="s2">"$\\Delta w$"</span><span class="p">))))</span><span class="o">+</span><span class="w">
+  </span><span class="n">labs</span><span class="p">(</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Share of total"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">theme_minimal</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">scale_fill_fermenter</span><span class="p">(</span><span class="n">palette</span><span class="o">=</span><span class="s2">"YlGnBu"</span><span class="p">,</span><span class="w"> </span><span class="n">limits</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">-0.3</span><span class="p">,</span><span class="w"> </span><span class="m">0.3</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="c1">#scale_fill_viridis_b(limits = c(-0.3, 0.3)) +</span><span class="w">
+  </span><span class="n">theme</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">element_text</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="m">16</span><span class="p">,</span><span class="w"> </span><span class="n">family</span><span class="o">=</span><span class="s2">"Palatino"</span><span class="p">),</span><span class="w"> </span><span class="n">legend.position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"bottom"</span><span class="p">)</span></code></pre></figure>
+
+</details> <br />
+Check out the [Jekyll docs][jekyll-docs] for more info on how to get the most out of Jekyll. File all bugs/feature requests at [Jekyll’s GitHub repo][jekyll-gh]. If you have questions, you can ask them on [Jekyll Talk][jekyll-talk].
+
+[jekyll-docs]: https://jekyllrb.com/docs/home
+[jekyll-gh]:   https://github.com/jekyll/jekyll
+[jekyll-talk]: https://talk.jekyllrb.com/ -->
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:1" role="doc-endnote">
+      <p>In particular, there are 52 descriptors of abilities, 35 descriptors of skills, and 41 descriptors of work activities. As of O*NET version 24.3, the data on work activities is derived from surveys of workers, while the data on abilities and skills is derived from surveys of occupational analysts. <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:2" role="doc-endnote">
+      <p>Although the DWS has been administered in the January of each even year since 1984, I use the data from the years 2004-2010. See the full paper for details. <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:3" role="doc-endnote">
+      <p>For instance, dentists are 74% members of the scientific occupation group and 26% members of the skilled manual occupation group, so for this exercise I assign dentistry as a scientific occupation. <a href="#fnref:3" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#projects" class="page__taxonomy-item p-category" rel="tag">projects</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2020-04-24T02:10:56-04:00">April 24, 2020</time></p>
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/projects/self-selection/" class="pagination--pager" title="Self-selection of workers across U.S. states
+">Previous</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2021 Steven Whitlow. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+         
+
+<script type="text/javascript" async
+	src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_HTMLorMML">
+</script>
+
+<script type="text/x-mathjax-config">
+   MathJax.Hub.Config({
+     extensions: ["tex2jax.js"],
+     jax: ["input/TeX", "output/HTML-CSS"],
+     tex2jax: {
+       inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+       displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+       processEscapes: true
+     },
+     "HTML-CSS": {
+        availableFonts : ["STIX"],
+        preferredFont : "STIX",
+        webFont : "STIX-Web",
+        imageFont : null
+    },
+    TeX: { equationNumbers: { autoNumber: "AMS" } }
+   });
+</script>
+
+  </body>
+</html>
