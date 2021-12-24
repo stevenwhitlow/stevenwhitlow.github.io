@@ -372,7 +372,7 @@ w_{i} &amp;= \alpha_0 + \gamma \Upsilon_{skrt} + \alpha_{1}(s) + \alpha_{2}(r) +
 u_{i} &amp;= \underbrace{\mathbb{E}\left[u_{ik}|d_{ijk}=1\right]}_{\text{Selection bias}} + \omega_{i},
 \end{align*}\]
 
-<p>where the selection bias associated with individual $i$ is an expectation that is conditioned on the binary variable $d_{ijk}$, which takes value 1 when the individual is born in state $j$ and is observed as living in state $k$. I model this expecation through a a <strong>control function</strong> as follows:</p>
+<p>where the selection bias associated with individual $i$ is an expectation that is conditioned on the binary variable $d_{ijk}$, which takes value 1 when the individual is born in state $j$ and is observed as living in state $k$. I model this expecation through a <strong>control function</strong> as follows:</p>
 
 \[\begin{align}
 \mathbb{E}\left[u_{ik}|d_{ijk}=1\right] &amp;= \psi(p_{ijk},p_{ijj}). 
@@ -380,7 +380,9 @@ u_{i} &amp;= \underbrace{\mathbb{E}\left[u_{ik}|d_{ijk}=1\right]}_{\text{Selecti
 
 <p>The control function $\psi(p_{ijk},p_{ijj})$ depends only on an individual’s probability of moving to the state where they are actually observed, $p_{ijk}$, and their probability of staying in their state of birth $p_{ijj}$. If an individual stays in their state of birth, then $p_{ijk}=p_{ijj}$ and their control function depends on only one migration probability. I calculate these probabilities based on workers’ observed demographic characteristics, including their education and state of birth. I then insert this control function as an additional variable into the regression model (1) above.</p>
 
-<p>Identification depends on an <strong>exclusion restriction</strong>: including variables that shift the probability of a worker moving to a state but having no effect on state-specific wages. Here, identification is driven by the inclusion of state of birth when calculating the probability of residing in a state. The intuitive explanation of this assumption can be given as follows: workers with identical characteristics who were born in different states but currently both live in state \(k\) should earn the same amount except if they differ in latent ability. For instance, take two workers living in Arizona with identical observed characteristics, except for state of birth: one worker was born there and the other in Vermont. If the worker from Vermont has higher wages, we can conclude that Arizona provided them with a better job “match” that incentivized them to move a greater distance.</p>
+<p>Identification depends on an <strong>exclusion restriction</strong>: including variables that shift the probability of a worker moving to a state but having no effect on state-specific wages. Here, identification is driven by the inclusion of state of birth when calculating the probability of residing in a state. The intuitive explanation of this assumption can be given as follows: workers with identical characteristics who were born in different states but currently both live in state \(k\) should earn the same amount except if they differ in latent ability.</p>
+
+<p>For instance, take two workers living in Arizona with identical observed characteristics, except for state of birth: one worker was born there, the other in Vermont. If the worker from Vermont has higher wages, we can infer that Arizona may have provided them with a better job “match” that incentivized them to move a greater distance.</p>
 
 <h2 id="results">Results</h2>
 
@@ -545,8 +547,10 @@ For some states this is even higher: the gap in the value of the control functio
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
-  gtag('config', 'UA-206400049-1');
+  gtag('config', 'UA-206400049-1', {
+    'cookieExpires': 0,
+    'anonymize_ip': true
+ });
 </script>
 
 <!-- end custom footer snippets -->

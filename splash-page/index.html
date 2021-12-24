@@ -432,8 +432,10 @@
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
-  gtag('config', 'UA-206400049-1');
+  gtag('config', 'UA-206400049-1', {
+    'cookieExpires': 0,
+    'anonymize_ip': true
+ });
 </script>
 
 <!-- end custom footer snippets -->
