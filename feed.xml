@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-12-23T21:50:21-05:00</updated><id>/feed.xml</id><title type="html">Steven Whitlow</title><subtitle>Steven Whitlow</subtitle><author><name>Steven Whitlow</name></author><entry><title type="html">Latent Dirichlet Allocation</title><link href="/blog/latent-dirichlet-allocation/" rel="alternate" type="text/html" title="Latent Dirichlet Allocation" /><published>2021-11-14T01:10:56-05:00</published><updated>2021-11-14T01:10:56-05:00</updated><id>/blog/latent-dirichlet-allocation</id><content type="html" xml:base="/blog/latent-dirichlet-allocation/">&lt;h2 id=&quot;text-as-data&quot;&gt;Text as data&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-12-23T22:15:28-05:00</updated><id>/feed.xml</id><title type="html">Steven Whitlow</title><subtitle>Steven Whitlow</subtitle><author><name>Steven Whitlow</name></author><entry><title type="html">Latent Dirichlet Allocation</title><link href="/blog/latent-dirichlet-allocation/" rel="alternate" type="text/html" title="Latent Dirichlet Allocation" /><published>2021-11-14T01:10:56-05:00</published><updated>2021-11-14T01:10:56-05:00</updated><id>/blog/latent-dirichlet-allocation</id><content type="html" xml:base="/blog/latent-dirichlet-allocation/">&lt;h2 id=&quot;text-as-data&quot;&gt;Text as data&lt;/h2&gt;
 &lt;p&gt;Two primary issues:&lt;/p&gt;
 &lt;ol&gt;
   &lt;li&gt;Converting text data into something we can apply statistical methods to&lt;/li&gt;
@@ -38,26 +38,25 @@
 &lt;figure class=&quot;&quot;&gt;
   &lt;img src=&quot;/assets/img/text_4.png&quot; alt=&quot;&quot; /&gt;&lt;/figure&gt;
 
-&lt;p&gt;The last step is to determine how to measure the intensity of each word in each document. The simplest way is to use the term frequency, that is, the raw count of how many times a word appears in the document: \(x_{d,w}\). The problem  with this approach is that for most corpora, some words will appear in most or all documents. One way to address this is to weight  inverse document frequency:&lt;/p&gt;
+&lt;p&gt;The last step is to determine how to measure the intensity of each word in each document. The simplest way is to use the term frequency, that is, the raw count of how many times a word appears in the document: \(x_{d,w}\). The problem  with this approach is that for most corpora, some words will appear in most or all documents. One way to address this is to weight inverse document frequency:&lt;/p&gt;
 
 \[idf_{w} = \log\left(\frac{D}{\sum_{d=1}^{D}1(x_{d,w}&amp;gt;0)}\right).\]
 
-&lt;p&gt;which adjusts the term frequency
-• For the example review, the terms “ipad” and “work” both appear twice, but the resulting tf-idf is 9.243 and 3.992 respectively&lt;/p&gt;
+&lt;p&gt;which adjusts the term frequency to increase the weight of terms that appear relatively rarely throughout the corpus.&lt;/p&gt;
+
+&lt;p&gt;For the example review, the terms “ipad” and “work” both appear twice, but the resulting tf-idf is 9.243 and 3.992 respectively.&lt;/p&gt;
 
 &lt;h2 id=&quot;latent-dirichlet-allocation&quot;&gt;Latent Dirichlet allocation&lt;/h2&gt;
 
 &lt;h3 id=&quot;motivation&quot;&gt;Motivation&lt;/h3&gt;
 
-&lt;p&gt;The newspaper corpus used in this paper contains over one billion tokens and over one million unique tokens
-• Evidently, extreme dimensonality reduction is required
-• Keep only the top 250,000 words ranked by the sum of
-tf-idf, then go back to using the raw counts
-• Latent Dirichlet allocation is a topic model proposed by Blei, Jordan and Ng (JMLR, 2003)
-• Unsupervised classification of text data
-• LDA takes as input the document-term matrix and returns two sets of distributions:
-1 For each document d, a distribution over topics
-2 For each topic k, a distribution over words&lt;/p&gt;
+&lt;p&gt;In many cases, textual datasets can be very large. For instance, a newspaper article corpus might contain over one billion tokens and over one million unique tokens. Evidently, extreme dimensonality reduction is required. A solution is to keep only the top 250,000 words ranked by the sum of tf-idf, then go back to using the raw counts. At that point, one can use a topic model to extract relationships between documents. Latent Dirichlet allocation is one such topic model proposed by Blei, Jordan and Ng (JMLR, 2003) that allows for unsupervised classification of text data.&lt;/p&gt;
+
+&lt;p&gt;LDA takes as input the document-term matrix and returns two sets of distributions:&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;For each document d, a distribution over topics&lt;/li&gt;
+  &lt;li&gt;For each topic k, a distribution over words&lt;/li&gt;
+&lt;/ol&gt;
 
 &lt;h3 id=&quot;baseline-naïve-bayes-mixture-of-unigrams&quot;&gt;Baseline: Naïve Bayes (mixture of unigrams)&lt;/h3&gt;
 &lt;p&gt;The naive Bayes assumption, which can be applied in a topic modelling context by assumping that conditional on topic (class), the words within a document are independent.&lt;/p&gt;

@@ -294,7 +294,7 @@
       <span class="page__meta-readtime">
         <i class="far fa-clock" aria-hidden="true"></i>
         
-          5 minute read
+          6 minute read
         
       </span>
     
@@ -354,26 +354,25 @@
 <figure class="">
   <img src="/assets/img/text_4.png" alt="" /></figure>
 
-<p>The last step is to determine how to measure the intensity of each word in each document. The simplest way is to use the term frequency, that is, the raw count of how many times a word appears in the document: \(x_{d,w}\). The problem  with this approach is that for most corpora, some words will appear in most or all documents. One way to address this is to weight  inverse document frequency:</p>
+<p>The last step is to determine how to measure the intensity of each word in each document. The simplest way is to use the term frequency, that is, the raw count of how many times a word appears in the document: \(x_{d,w}\). The problem  with this approach is that for most corpora, some words will appear in most or all documents. One way to address this is to weight inverse document frequency:</p>
 
 \[idf_{w} = \log\left(\frac{D}{\sum_{d=1}^{D}1(x_{d,w}&gt;0)}\right).\]
 
-<p>which adjusts the term frequency
-• For the example review, the terms “ipad” and “work” both appear twice, but the resulting tf-idf is 9.243 and 3.992 respectively</p>
+<p>which adjusts the term frequency to increase the weight of terms that appear relatively rarely throughout the corpus.</p>
+
+<p>For the example review, the terms “ipad” and “work” both appear twice, but the resulting tf-idf is 9.243 and 3.992 respectively.</p>
 
 <h2 id="latent-dirichlet-allocation">Latent Dirichlet allocation</h2>
 
 <h3 id="motivation">Motivation</h3>
 
-<p>The newspaper corpus used in this paper contains over one billion tokens and over one million unique tokens
-• Evidently, extreme dimensonality reduction is required
-• Keep only the top 250,000 words ranked by the sum of
-tf-idf, then go back to using the raw counts
-• Latent Dirichlet allocation is a topic model proposed by Blei, Jordan and Ng (JMLR, 2003)
-• Unsupervised classification of text data
-• LDA takes as input the document-term matrix and returns two sets of distributions:
-1 For each document d, a distribution over topics
-2 For each topic k, a distribution over words</p>
+<p>In many cases, textual datasets can be very large. For instance, a newspaper article corpus might contain over one billion tokens and over one million unique tokens. Evidently, extreme dimensonality reduction is required. A solution is to keep only the top 250,000 words ranked by the sum of tf-idf, then go back to using the raw counts. At that point, one can use a topic model to extract relationships between documents. Latent Dirichlet allocation is one such topic model proposed by Blei, Jordan and Ng (JMLR, 2003) that allows for unsupervised classification of text data.</p>
+
+<p>LDA takes as input the document-term matrix and returns two sets of distributions:</p>
+<ol>
+  <li>For each document d, a distribution over topics</li>
+  <li>For each topic k, a distribution over words</li>
+</ol>
 
 <h3 id="baseline-naïve-bayes-mixture-of-unigrams">Baseline: Naïve Bayes (mixture of unigrams)</h3>
 <p>The naive Bayes assumption, which can be applied in a topic modelling context by assumping that conditional on topic (class), the words within a document are independent.</p>
