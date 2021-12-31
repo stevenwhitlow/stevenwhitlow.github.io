@@ -9,8 +9,8 @@
   <head>
     <meta charset="utf-8">
 
-<!-- begin _includes/seo.html --><title>Fuzzy classification of occupational tasks - Steven Whitlow</title>
-<meta name="description" content="I build a Grade of Membership (GoM) model to classify occupations based on the skills and tasks they require in day-to-day work. GoM models are an alternative to traditional approaches like $k$-means clustering or PCA which produce “fuzzy” classifications in which occupations can be considered as partial members of multiple groups.">
+<!-- begin _includes/seo.html --><title>Soft classification of occupational tasks - Steven Whitlow</title>
+<meta name="description" content="I build a Grade of Membership (GoM) model to classify occupations based on the skills and tasks they require in day-to-day work. GoM models are an alternative to traditional approaches like $k$-means clustering or PCA which produce “soft” classifications in which occupations can be considered as partial members of multiple groups.">
 
 
   <meta name="author" content="Steven Whitlow">
@@ -22,11 +22,11 @@
 <meta property="og:type" content="article">
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="Steven Whitlow">
-<meta property="og:title" content="Fuzzy classification of occupational tasks">
-<meta property="og:url" content="/projects/fuzzy-classification-occupations/">
+<meta property="og:title" content="Soft classification of occupational tasks">
+<meta property="og:url" content="/projects/soft-classification-occupations/">
 
 
-  <meta property="og:description" content="I build a Grade of Membership (GoM) model to classify occupations based on the skills and tasks they require in day-to-day work. GoM models are an alternative to traditional approaches like $k$-means clustering or PCA which produce “fuzzy” classifications in which occupations can be considered as partial members of multiple groups.">
+  <meta property="og:description" content="I build a Grade of Membership (GoM) model to classify occupations based on the skills and tasks they require in day-to-day work. GoM models are an alternative to traditional approaches like $k$-means clustering or PCA which produce “soft” classifications in which occupations can be considered as partial members of multiple groups.">
 
 
 
@@ -45,7 +45,7 @@
   
 
 
-<link rel="canonical" href="/projects/fuzzy-classification-occupations/">
+<link rel="canonical" href="/projects/soft-classification-occupations/">
 
 
 
@@ -268,8 +268,8 @@
 
 
   <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
-    <meta itemprop="headline" content="Fuzzy classification of occupational tasks">
-    <meta itemprop="description" content="I build a Grade of Membership (GoM) model to classify occupations based on the skills and tasks they require in day-to-day work. GoM models are an alternative to traditional approaches like $k$-means clustering or PCA which produce “fuzzy” classifications in which occupations can be considered as partial members of multiple groups.">
+    <meta itemprop="headline" content="Soft classification of occupational tasks">
+    <meta itemprop="description" content="I build a Grade of Membership (GoM) model to classify occupations based on the skills and tasks they require in day-to-day work. GoM models are an alternative to traditional approaches like $k$-means clustering or PCA which produce “soft” classifications in which occupations can be considered as partial members of multiple groups.">
     <meta itemprop="datePublished" content="2020-04-24T02:10:56-04:00">
     
 
@@ -277,7 +277,7 @@
       
         <header>
           <h1 id="page-title" class="page__title p-name" itemprop="headline">
-            <a href="/projects/fuzzy-classification-occupations/" class="u-url" itemprop="url">Fuzzy classification of occupational tasks
+            <a href="/projects/soft-classification-occupations/" class="u-url" itemprop="url">Soft classification of occupational tasks
 </a>
           </h1>
           
@@ -306,7 +306,7 @@
 
 <p>In this post, I describe a <strong>Grade of Membership</strong> (GoM) model to classify occupations. The GoM model is a hierarchical Bayesian model which treats observations as mixtures over a given number of latent extreme types and is part of a larger family of mixed membership models. For example, GoM can be considered a close cousin of such as Latent Dirichlet Allocation, used in document classification; while LDA is applied to counts, such as the number of appearances of a given word in a document, the GoM model focuses on discrete responses to survey data.</p>
 
-<p>GoM models produce fuzzy or <em>soft</em> classifications in which occupations can be considered as partial members of multiple groups.
+<p>GoM models produce <em>soft</em> classifications in which occupations can be considered as partial members of multiple groups.
 Classifications produced by a GoM model are simply point estimates for parameters of a multinomial distribution for each occupation, which have the advantage of being easily interpretable as probabilities. On the other hand, alternate classification methods such as PCA will in general be uninterpretable without adjusting the results – such as rotating the PCA factor loadings – which involves making assumptions about which features are important instead of letting the data speak for itself.</p>
 
 <details class="notice"><summary>More information about the advantages over other approaches</summary>
