@@ -11,9 +11,9 @@ var store = [{
         "url": "/projects/self-selection/",
         "teaser": null
       },{
-        "title": "Soft classification of occupational tasks",
+        "title": "Soft clustering of occupational tasks",
         "excerpt":"See the full paper associated with this project here. See the code on GitHub. To what degree are accumulated skills are transferable across different jobs? Labour market datasets typically include information on the occupations worked by individuals. The Dictionary of Occupational Titles (DOT) and its successor O*NET are two datasets...","categories": ["projects"],
         "tags": [],
-        "url": "/projects/soft-classification-occupations/",
+        "url": "/projects/grade-of-membership-occupations/",
         "teaser": null
       }]

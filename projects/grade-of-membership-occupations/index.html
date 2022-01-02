@@ -9,8 +9,8 @@
   <head>
     <meta charset="utf-8">
 
-<!-- begin _includes/seo.html --><title>Soft classification of occupational tasks - Steven Whitlow</title>
-<meta name="description" content="I build a Grade of Membership (GoM) model to classify occupations based on the skills and tasks they require in day-to-day work. GoM models are an alternative to traditional approaches like $k$-means clustering or PCA which produce “soft” classifications in which occupations can be considered as partial members of multiple groups.">
+<!-- begin _includes/seo.html --><title>Soft clustering of occupational tasks - Steven Whitlow</title>
+<meta name="description" content="I build a Grade of Membership (GoM) model to group occupations based on the skills and tasks they require in day-to-day work. GoM models are an alternative to traditional approaches like $k$-means clustering and produces “soft” clusters in which occupations can be considered as partial members of multiple groups.">
 
 
   <meta name="author" content="Steven Whitlow">
@@ -22,11 +22,11 @@
 <meta property="og:type" content="article">
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="Steven Whitlow">
-<meta property="og:title" content="Soft classification of occupational tasks">
-<meta property="og:url" content="/projects/soft-classification-occupations/">
+<meta property="og:title" content="Soft clustering of occupational tasks">
+<meta property="og:url" content="/projects/grade-of-membership-occupations/">
 
 
-  <meta property="og:description" content="I build a Grade of Membership (GoM) model to classify occupations based on the skills and tasks they require in day-to-day work. GoM models are an alternative to traditional approaches like $k$-means clustering or PCA which produce “soft” classifications in which occupations can be considered as partial members of multiple groups.">
+  <meta property="og:description" content="I build a Grade of Membership (GoM) model to group occupations based on the skills and tasks they require in day-to-day work. GoM models are an alternative to traditional approaches like $k$-means clustering and produces “soft” clusters in which occupations can be considered as partial members of multiple groups.">
 
 
 
@@ -45,7 +45,7 @@
   
 
 
-<link rel="canonical" href="/projects/soft-classification-occupations/">
+<link rel="canonical" href="/projects/grade-of-membership-occupations/">
 
 
 
@@ -268,8 +268,8 @@
 
 
   <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
-    <meta itemprop="headline" content="Soft classification of occupational tasks">
-    <meta itemprop="description" content="I build a Grade of Membership (GoM) model to classify occupations based on the skills and tasks they require in day-to-day work. GoM models are an alternative to traditional approaches like $k$-means clustering or PCA which produce “soft” classifications in which occupations can be considered as partial members of multiple groups.">
+    <meta itemprop="headline" content="Soft clustering of occupational tasks">
+    <meta itemprop="description" content="I build a Grade of Membership (GoM) model to group occupations based on the skills and tasks they require in day-to-day work. GoM models are an alternative to traditional approaches like $k$-means clustering and produces “soft” clusters in which occupations can be considered as partial members of multiple groups.">
     <meta itemprop="datePublished" content="2020-04-24T02:10:56-04:00">
     
 
@@ -277,7 +277,7 @@
       
         <header>
           <h1 id="page-title" class="page__title p-name" itemprop="headline">
-            <a href="/projects/soft-classification-occupations/" class="u-url" itemprop="url">Soft classification of occupational tasks
+            <a href="/projects/grade-of-membership-occupations/" class="u-url" itemprop="url">Soft clustering of occupational tasks
 </a>
           </h1>
           
@@ -291,7 +291,7 @@
           <aside class="sidebar__right sticky">
             <nav class="toc">
               <header><h4 class="nav__title"><i class="fas fa-keyboard"></i> On this page</h4></header>
-              <ul class="toc__menu"><li><a href="#the-onet-dataset">The O*NET dataset</a></li><li><a href="#grade-of-membership-classification">Grade of Membership classification</a><ul><li><a href="#technical-definition-of-the-model">Technical definition of the model</a></li><li><a href="#estimation">Estimation</a></li></ul></li><li><a href="#results">Results</a><ul><li><a href="#classification-results">Classification results</a></li><li><a href="#application-wage-changes-after-occupational-switches">Application: Wage changes after occupational switches</a></li></ul></li></ul>
+              <ul class="toc__menu"><li><a href="#the-onet-dataset">The O*NET dataset</a></li><li><a href="#grade-of-membership-model">Grade of Membership model</a><ul><li><a href="#technical-definition-of-the-model">Technical definition of the model</a></li><li><a href="#estimation">Estimation</a></li></ul></li><li><a href="#results">Results</a><ul><li><a href="#grade-of-membership-results">Grade of Membership results</a></li><li><a href="#application-wage-changes-after-occupational-switches">Application: Wage changes after occupational switches</a></li></ul></li></ul>
 
             </nav>
           </aside>
@@ -304,10 +304,9 @@
 <p>To what degree are accumulated skills are transferable across different jobs? Labour market datasets typically include information on the occupations worked by individuals. 
 <!-- An alternate but related approach to considering human capital as occupation-specific is to treat human capital as being specific to the tasks that are performed on the job.--> The Dictionary of Occupational Titles (DOT) and its successor O*NET are two datasets from the U.S. Department of Labor which provide information on the degree to which different occupations utilize different tasks. A workers’ occupation can be thought of as a noisy proxy for the tasks they perform on the job.</p>
 
-<p>In this post, I describe a <strong>Grade of Membership</strong> (GoM) model to classify occupations. The GoM model is a hierarchical Bayesian model which treats observations as mixtures over a given number of latent extreme types and is part of a larger family of mixed membership models. For example, GoM can be considered a close cousin of such as Latent Dirichlet Allocation, used in document classification; while LDA is applied to counts, such as the number of appearances of a given word in a document, the GoM model focuses on discrete responses to survey data.</p>
+<p>In this post, I describe a <strong>Grade of Membership</strong> (GoM) model to categorize occupations. The GoM model is a hierarchical Bayesian model which treats observations as mixtures over a given number of latent extreme types and is part of a larger family of mixed membership models. For example, GoM can be considered a close cousin of such as Latent Dirichlet Allocation, used in document classification; while LDA is applied to counts, such as the number of appearances of a given word in a document, the GoM model focuses on discrete responses to survey data.</p>
 
-<p>GoM models produce <em>soft</em> classifications in which occupations can be considered as partial members of multiple groups.
-Classifications produced by a GoM model are simply point estimates for parameters of a multinomial distribution for each occupation, which have the advantage of being easily interpretable as probabilities. On the other hand, alternate classification methods such as PCA will in general be uninterpretable without adjusting the results – such as rotating the PCA factor loadings – which involves making assumptions about which features are important instead of letting the data speak for itself.</p>
+<p>GoM models produce <em>soft</em> clusters in which occupations can be considered as partial members of multiple groups. Classifications produced by a GoM model are simply point estimates for parameters of a multinomial distribution for each occupation, which have the advantage of being easily interpretable as probabilities. On the other hand, alternate dimensionality reduction methods such as PCA will in general be uninterpretable without adjusting the results – such as rotating the PCA factor loadings – which involves making assumptions about which features are important instead of letting the data speak for itself.</p>
 
 <details class="notice"><summary>More information about the advantages over other approaches</summary>
 Methods using data from O*NET are generally limited in the fact that their task intensity measures are ordinal, since they are based on categorical responses to survey data. One common technique to address this is to replace the task intensity measure for each occupation with its percentile rank; even with this transformation, it's unclear the extent to which one can assess the distance between occupations in terms of task content. By contrast, the GoM results are cardinal measures and sum to one by construction.   <br /> <br />
@@ -329,7 +328,7 @@ I choose to estimate the model using only the responses for the level category a
 
 <p>I normalize these ratings by transforming the means of responses into a categorical variable which takes values  $X_{i,j} \in {1, 2, 3}$ based on the position of occupation $i$ in the task-specific distribution of mean level ratings for descriptor $j$. For instance, $X_{i,j}$ would take a value of 1 if occupation $i$ is in the first tercile of mean level ratings for descriptor $j$. The responses for each occupation should thus be interpreted as reflecting the levels of ability in a given skill or task required <strong>relative</strong> to all other occupations in the O*NET data.</p>
 
-<h2 id="grade-of-membership-classification">Grade of Membership classification</h2>
+<h2 id="grade-of-membership-model">Grade of Membership model</h2>
 
 <h3 id="technical-definition-of-the-model">Technical definition of the model</h3>
 
@@ -362,7 +361,7 @@ I choose to estimate the model using only the responses for the level category a
 
 <p>The best practice is to try as many initializations as are computationally feasible. In my $k$-fold cross-validation exercise in the next section, I consider 24 different initializations for each fold and each value of $K$. In total, with 24 initialization points, 5 folds, and 6 alternatives for $K$, the cross-validation exercise involves estimating $24\times5\times6=720$ GoM models.</p>
 
-<p>For the cross-validation exercise, since the GoM is an unsupervised model, the value of interest is the held-out ELBO. For each initialization, after obtaining fitted values $\mathbf{\hat{\alpha}}$ and $\mathbf{\hat{\theta}}$, I then calculate the held-out ELBO for fold $f_{test}$ as follows. First, I obtain classifications (formally, the variational parameters) for the occupations in $f_{test}$ by applying a single E-step, holding fixed the estimated $\mathbf{\hat{\alpha}}$ and $\mathbf{\hat{\theta}}$ obtained from the training set. Second, I calculate the ELBO for the occupations in $f_{test}$ using the fitted values from the training set $\mathbf{\hat{\alpha}}$ and $\mathbf{\hat{\theta}}$ and the classifications from the E-step.</p>
+<p>For the cross-validation exercise, since the GoM is an unsupervised model, the value of interest is the held-out ELBO. For each initialization, after obtaining fitted values $\mathbf{\hat{\alpha}}$ and $\mathbf{\hat{\theta}}$, I then calculate the held-out ELBO for fold $f_{test}$ as follows. First, I obtain estimates of group membership (formally, the variational parameters) for the occupations in $f_{test}$ by applying a single E-step, holding fixed the estimated $\mathbf{\hat{\alpha}}$ and $\mathbf{\hat{\theta}}$ obtained from the training set. Second, I calculate the ELBO for the occupations in $f_{test}$ using the fitted values from the training set $\mathbf{\hat{\alpha}}$ and $\mathbf{\hat{\theta}}$ and the classifications from the E-step.</p>
 
 <p>I define the held-out ELBO for a given $K$ and fold $f$ as the maximum held-out ELBO across all initializations. The held-out ELBO for a given $K$ is the mean of these maximum held-out ELBO values. See <a href="/assets/pdf/occupation_grade_of_membership.pdf">the associated paper</a> for more information on the cross-validation process. I choose to estimate the model with $K=7$ using the full sample at each of the 24 initializations and select the initialization with the highest ELBO.</p>
 
@@ -372,16 +371,16 @@ Variational inference has several advantages relative to MCMC. MCMC tends to be 
 
 <h2 id="results">Results</h2>
 
-<h3 id="classification-results">Classification results</h3>
+<h3 id="grade-of-membership-results">Grade of Membership results</h3>
 
-<p>The first step in examining the estimated classifications are to assign labels to each group $k$. Since this is an unsupervised learning situation, the assignment of labels to each group is a subjective process. I use both the estimated $\hat{\mathbf{\theta}}$ matrix – the estimated distribution of skill requirements for each group $k$ – as well as the titles of occupations with very high (i.e., close to 100%) degrees of membership in the various groups to assist me.</p>
+<p>The first step in examining the estimated groupings are to assign labels to each group $k$. Since this is an unsupervised learning situation, the assignment of labels to each group is a subjective process. I use both the estimated $\hat{\mathbf{\theta}}$ matrix – the estimated distribution of skill requirements for each group $k$ – as well as the titles of occupations with very high (i.e., close to 100%) degrees of membership in the various groups to assist me.</p>
 
 <ol>
   <li>
     <p><b>Scientific</b> occupations are high in their cognitive task requirements, especially in relation to problem solving, but also often require significant ability in manual tasks. <i> Examples: Material engineers, biomedical engineers, physical medicine physicians, soil and plant scientists</i></p>
   </li>
   <li>
-    <p><b>Other abstract</b> occupations are high in their cognitive task requirements, but are unlikely to demand skill in manual tasks. <i>Examples: CEOs, lawyers, economists, political scientists</i></p>
+    <p><b>Abstract</b> occupations are high in their cognitive task requirements, but are unlikely to demand skill in manual tasks. <i>Examples: CEOs, lawyers, economists, political scientists</i></p>
   </li>
   <li>
     <p><b>Skilled manual</b> occupations require moderate levels of cognitive skill, but are highly likely to require skill in operating, maintaining, or repairing equipment. <i>Examples: Hydroelectric plant technicians, forest firefighters</i></p>
@@ -400,11 +399,13 @@ Variational inference has several advantages relative to MCMC. MCMC tends to be 
   </li>
 </ol>
 
+<iframe height="600px" width="100%" frameborder="no" margin="0" padding="0" overflow-y="hidden" display="block" src="https://swhitlow.shinyapps.io/groups_shiny/"> </iframe>
+
 <h3 id="application-wage-changes-after-occupational-switches">Application: Wage changes after occupational switches</h3>
 
-<p>Let’s examine whether the classification results can help us understand wage changes following job displacement events. How do occupation switches made by workers following a job displacement event map onto changes in wages? To examine the occupation switching patterns of displaced workers, I use the Displaced Worker Supplement (DWS) to the Current Population Survey.<sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup> The DWS is a representative survey from the U.S. that tracks workers who were laid off from their job in the past three years.</p>
+<p>Let’s examine whether the GoM results can help us understand wage changes following job displacement events. How do occupation switches made by workers following a job displacement event map onto changes in wages? To examine the occupation switching patterns of displaced workers, I use the Displaced Worker Supplement (DWS) to the Current Population Survey.<sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup> The DWS is a representative survey from the U.S. that tracks workers who were laid off from their job in the past three years.</p>
 
-<p>For simplicity, I start by turning the soft classification into a hard classification by assigning each occupation into distinct groups based on the highest degree of membership and plot the data using a Sankey diagram.<sup id="fnref:3" role="doc-noteref"><a href="#fn:3" class="footnote" rel="footnote">3</a></sup> The <strong>size</strong> of the flows between primary types reflects the (weighted) share of the total sample that is observed making such a transition. In addition, the flows are <strong>shaded</strong> so as to reflect the average change in wages observed by these workers.</p>
+<p>For simplicity, I start by turning the soft groupings into clusters by assigning each occupation into distinct groups based on the highest degree of membership and plot the data using a Sankey diagram.<sup id="fnref:3" role="doc-noteref"><a href="#fn:3" class="footnote" rel="footnote">3</a></sup> The <strong>size</strong> of the flows between primary types reflects the (weighted) share of the total sample that is observed making such a transition. In addition, the flows are <strong>shaded</strong> so as to reflect the average change in wages observed by these workers.</p>
 
 <p><em>Hover over the diagram to learn more!</em></p>
 <iframe height="650px" width="100%" frameborder="no" margin="0" padding="0" overflow-y="hidden" display="block" src="https://swhitlow.shinyapps.io/occupation_changes/"> </iframe>
@@ -414,48 +415,12 @@ Variational inference has several advantages relative to MCMC. MCMC tends to be 
 <p>In <a href="/assets/pdf/occupation_grade_of_membership.pdf">the full paper</a> I examine these wage changes more closely using regression analysis using features derived from the full group membership vectors associated with each workers’ initial and new occupations. I create <em>distance</em> and <em>direction</em> measures associated with occupation switches:</p>
 
 <ol>
-  <li>The distance of an occupational switch is the Hellinger distance between the estimated membership vectors of a workers’ occupations before and after a displacement event.</li>
-  <li>The direction of the switch is based on whether a worker moves down the occupational wage ladder as predicted by the estimated membership vectors. This measure uses results from a secondary regression using a larger sample size of millions of workers in the 2000 U.S. Census.</li>
+  <li>The <strong>distance</strong> of an occupational switch is the Hellinger distance between the estimated membership vectors of a workers’ occupations before and after a displacement event.</li>
+  <li>The <strong>direction</strong> of the switch is based on whether a worker moves down the occupational wage ladder as predicted by the estimated membership vectors. This measure uses results from a secondary regression using a larger sample size of millions of workers in the 2000 U.S. Census.</li>
 </ol>
 
 <p>The results confirm that the GoM classifications using occupational task data can explain large changes in wages following occupation switches.</p>
 
-<!--
-## Conclusion
-
-You’ll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run `jekyll serve`, which launches a web server and auto-regenerates your site when a file is updated.
-
-Jekyll requires blog post files to be named according to the following format:
-
-`YEAR-MONTH-DAY-title.MARKUP`
-
-Where `YEAR` is a four-digit number, `MONTH` and `DAY` are both two-digit numbers, and `MARKUP` is the file extension representing the format used in the file. After that, include the necessary front matter. Take a look at the source for this post to get an idea about how it works.
-
-Jekyll also offers powerful support for code snippets:
-<details>
-  <summary>Code:</summary>
-
-<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">ggplot</span><span class="p">(</span><span class="n">inner_join</span><span class="p">(</span><span class="n">sankey_data</span><span class="p">,</span><span class="n">mode_and_wage_changes</span><span class="p">),</span><span class="w">
-       </span><span class="n">aes</span><span class="p">(</span><span class="n">axis1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mode_former</span><span class="p">,</span><span class="w">
-           </span><span class="n">axis2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mode_current</span><span class="p">,</span><span class="w">
-           </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">total</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
-  </span><span class="n">geom_alluvium</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">change_wage</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
-  </span><span class="n">geom_stratum</span><span class="p">(</span><span class="n">alpha</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.1</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
-  </span><span class="n">geom_text</span><span class="p">(</span><span class="n">stat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"stratum"</span><span class="p">,</span><span class="w"> 
-            </span><span class="n">label.strata</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
-  </span><span class="n">scale_x_discrete</span><span class="p">(</span><span class="n">limits</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"Pre-displacement \n primary type"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Post-displacement \n primary type"</span><span class="p">),</span><span class="w">
-                   </span><span class="n">expand</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">-0.3</span><span class="p">,</span><span class="w"> </span><span class="m">0.3</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
-  </span><span class="n">guides</span><span class="p">(</span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">guide_legend</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="n">unname</span><span class="p">(</span><span class="n">TeX</span><span class="p">(</span><span class="s2">"$\\Delta w$"</span><span class="p">))))</span><span class="o">+</span><span class="w">
-  </span><span class="n">labs</span><span class="p">(</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Share of total"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
-  </span><span class="n">theme_minimal</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">scale_fill_fermenter</span><span class="p">(</span><span class="n">palette</span><span class="o">=</span><span class="s2">"YlGnBu"</span><span class="p">,</span><span class="w"> </span><span class="n">limits</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">-0.3</span><span class="p">,</span><span class="w"> </span><span class="m">0.3</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="c1">#scale_fill_viridis_b(limits = c(-0.3, 0.3)) +</span><span class="w">
-  </span><span class="n">theme</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">element_text</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="m">16</span><span class="p">,</span><span class="w"> </span><span class="n">family</span><span class="o">=</span><span class="s2">"Palatino"</span><span class="p">),</span><span class="w"> </span><span class="n">legend.position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"bottom"</span><span class="p">)</span></code></pre></figure>
-
-</details> <br />
-Check out the [Jekyll docs][jekyll-docs] for more info on how to get the most out of Jekyll. File all bugs/feature requests at [Jekyll’s GitHub repo][jekyll-gh]. If you have questions, you can ask them on [Jekyll Talk][jekyll-talk].
-
-[jekyll-docs]: https://jekyllrb.com/docs/home
-[jekyll-gh]:   https://github.com/jekyll/jekyll
-[jekyll-talk]: https://talk.jekyllrb.com/ -->
 <div class="footnotes" role="doc-endnotes">
   <ol>
     <li id="fn:1" role="doc-endnote">
@@ -569,7 +534,7 @@ Check out the [Jekyll docs][jekyll-docs] for more info on how to get the most ou
   </ul>
 </div>
 
-<div class="page__footer-copyright">&copy; 2021 Steven Whitlow. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+<div class="page__footer-copyright">&copy; 2022 Steven Whitlow. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
 
       </footer>
     </div>
