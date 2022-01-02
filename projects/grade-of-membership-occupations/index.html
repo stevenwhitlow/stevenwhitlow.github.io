@@ -399,6 +399,7 @@ Variational inference has several advantages relative to MCMC. MCMC tends to be 
   </li>
 </ol>
 
+<p><em>Search for an occupation title below to see its estimated memberships.</em></p>
 <iframe height="600px" width="100%" frameborder="no" margin="0" padding="0" overflow-y="hidden" display="block" src="https://swhitlow.shinyapps.io/groups_shiny/"> </iframe>
 
 <h3 id="application-wage-changes-after-occupational-switches">Application: Wage changes after occupational switches</h3>
@@ -412,14 +413,83 @@ Variational inference has several advantages relative to MCMC. MCMC tends to be 
 
 <p>It’s clear that there is a large degree of movement across groups; however, the extremes of wage changes appear to be driven by movement to and from occupations which are primarily classified as low-skill service. Workers transitioning to low-skill service jobs have steep wage losses, with steep wage gains for workers transitioning away from these jobs.</p>
 
-<p>In <a href="/assets/pdf/occupation_grade_of_membership.pdf">the full paper</a> I examine these wage changes more closely using regression analysis using features derived from the full group membership vectors associated with each workers’ initial and new occupations. I create <em>distance</em> and <em>direction</em> measures associated with occupation switches:</p>
+<p>I examine these wage changes more closely using regression analysis using features derived from the full group membership vectors associated with each workers’ initial and new occupations. I create <em>distance</em> and <em>direction</em> measures associated with occupation switches:</p>
 
 <ol>
-  <li>The <strong>distance</strong> of an occupational switch is the Hellinger distance between the estimated membership vectors of a workers’ occupations before and after a displacement event.</li>
+  <li>The <strong>distance</strong> of an occupational switch is the Hellinger distance between the estimated membership vectors of a workers’ occupations before and after a displacement event, defined as $\frac{1}{\sqrt{2}}\sqrt{\sum_{k=1}^{K}\left(\sqrt{\lambda_{new,k}} - \sqrt{\lambda_{old,k}} \right)^{2}}.$</li>
   <li>The <strong>direction</strong> of the switch is based on whether a worker moves down the occupational wage ladder as predicted by the estimated membership vectors. This measure uses results from a secondary regression using a larger sample size of millions of workers in the 2000 U.S. Census.</li>
 </ol>
 
-<p>The results confirm that the GoM classifications using occupational task data can explain large changes in wages following occupation switches.</p>
+<p>The results confirm that the GoM classifications using occupational task data can explain large changes in wages following occupation switches. More information on the regression specification and results are available in the <a href="/assets/pdf/occupation_grade_of_membership.pdf">the full paper</a>.</p>
+
+<center>
+<table>
+    <thead>
+        <tr>
+            <th colspan="4" style="text-align: center">Effect of occupational switches on wages earned</th>
+        </tr>   
+        <tr>
+            <th style="text-align: center">Coefficient</th>
+            <th style="text-align: center">(1)</th>
+            <th style="text-align: center">(2)</th>
+            <th style="text-align: center">(3)</th>
+        </tr>
+    </thead>
+    <tr>
+        <td>Constant</td>
+        <td>-0.014 <br /> (0.014) </td>
+        <td>-0.013  <br /> (0.014) </td>
+        <td>-0.013 <br /> (0.014) </td>
+    </tr>
+    <tr>
+        <td>Switch occupation</td>
+        <td>-0.051** <br /> (0.020)</td>
+        <td>-0.060* <br /> (0.024)</td>
+        <td>-0.066** <br /> (0.020)</td>
+    </tr>
+    <tr>
+        <td>Hellinger distance</td>
+        <td>-0.003 <br /> (0.030)</td>
+        <td>0.136** <br /> (0.041)</td>
+        <td>0.078* <br /> (0.034)</td>
+    </tr>
+    <tr>
+        <td>Switch $\downarrow$ (Implied by MV)</td>
+        <td>---</td>
+        <td>0.029 <br /> (0.035)</td>
+        <td>---</td>
+    </tr>
+    <tr>
+        <td>Hellinger $\times$ Switch $\downarrow$</td>
+        <td>---</td>
+        <td>-0.285** <br /> (0.059)</td>
+        <td>---</td>
+    </tr>
+    <tr>
+        <td>Switch to Low-Skill Service</td>
+        <td>---</td>
+        <td>---</td>
+        <td>0.003 <br /> (0.078)</td>
+    </tr>
+    <tr>
+        <td>Hellinger $\times$ Switch to LSS</td>
+        <td>---</td>
+        <td>---</td>
+        <td>-0.217* <br /> (0.104)</td>
+    </tr>
+    <tr>
+        <td>Year fixed effects</td>
+        <td>Yes</td>
+        <td>Yes</td>
+        <td>Yes</td>
+    </tr>
+    <tr>
+        <td>N</td>
+        <td>2223</td>
+        <td>2223</td>
+        <td>2223</td>
+    </tr>
+</table></center>
 
 <div class="footnotes" role="doc-endnotes">
   <ol>
