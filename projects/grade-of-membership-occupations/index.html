@@ -417,10 +417,12 @@ Variational inference has several advantages relative to MCMC. MCMC tends to be 
 
 <ol>
   <li>The <strong>distance</strong> of an occupational switch is the Hellinger distance between the estimated membership vectors of a workers’ occupations before and after a displacement event, defined as $\frac{1}{\sqrt{2}}\sqrt{\sum_{k=1}^{K}\left(\sqrt{\lambda_{new,k}} - \sqrt{\lambda_{old,k}} \right)^{2}}.$</li>
-  <li>The <strong>direction</strong> of the switch is based on whether a worker moves down the occupational wage ladder as predicted by the estimated membership vectors. This measure uses results from a secondary regression using a larger sample size of millions of workers in the 2000 U.S. Census.</li>
+  <li>The <strong>direction</strong> of the switch is defined based on whether a worker moves down the occupational wage ladder as predicted by the estimated membership vectors. This measure uses results from a secondary regression using a larger sample size of millions of workers in the 2000 U.S. Census.</li>
 </ol>
 
-<p>The results confirm that the GoM classifications using occupational task data can explain large changes in wages following occupation switches. More information on the regression specification and results are available in the <a href="/assets/pdf/occupation_grade_of_membership.pdf">the full paper</a>.</p>
+<p>By estimating regressions with the distance and direction measures and their interactions, I confirm that the GoM classifications using occupational task data can explain large changes in wages following occupation switches. Occupation switches with high distance are associated with large wage losses if the direction is negative.</p>
+
+<p>The coefficient estimates for the main regressions are listed below. More information on the regression specification and results are available in the <a href="/assets/pdf/occupation_grade_of_membership.pdf">the full paper</a>.</p>
 
 <center>
 <table>
@@ -482,12 +484,6 @@ Variational inference has several advantages relative to MCMC. MCMC tends to be 
         <td>Yes</td>
         <td>Yes</td>
         <td>Yes</td>
-    </tr>
-    <tr>
-        <td>N</td>
-        <td>2223</td>
-        <td>2223</td>
-        <td>2223</td>
     </tr>
 </table></center>
 
