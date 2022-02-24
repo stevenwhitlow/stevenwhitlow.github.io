@@ -374,7 +374,11 @@ Variational inference has several advantages relative to MCMC. MCMC tends to be 
 
 <h3 id="grade-of-membership-results">Grade of Membership results</h3>
 
-<p>The first step in examining the estimated groupings are to assign labels to each group $k$. Since this is an unsupervised learning situation, the assignment of labels to each group is a subjective process. I use both the estimated $\hat{\mathbf{\theta}}$ matrix – the estimated distribution of skill requirements for each group $k$ – as well as the titles of occupations with very high (i.e., close to 100%) degrees of membership in the various groups to assist me.</p>
+<p>The first step in examining the estimated groupings are to assign labels to each group $k$. Since this is an unsupervised learning task, the assignment of labels to each group is a subjective process. I use both the estimated $\hat{\mathbf{\theta}}$ matrix – the estimated distribution of skill requirements for each group $k$ – as well as the job titles of occupations with very high (i.e., close to 100%) degrees of membership in the various groups to assist me.</p>
+
+<p><em>Search for an occupation to see its estimated group memberships. A description of each group and example job titles is below.</em></p>
+
+<iframe height="600px" width="100%" frameborder="no" margin="0" padding="0" overflow-y="hidden" display="block" src="https://swhitlow.shinyapps.io/groups_shiny/"> </iframe>
 
 <ol>
   <li>
@@ -399,9 +403,6 @@ Variational inference has several advantages relative to MCMC. MCMC tends to be 
     <p><b>Low-skill service</b> occupations have the lowest skill requirements, concentrated in service tasks. <i>Examples: Fast food cooks, orderlies, food servers</i></p>
   </li>
 </ol>
-
-<p><em>Search for an occupation title below to see its estimated memberships.</em></p>
-<iframe height="600px" width="100%" frameborder="no" margin="0" padding="0" overflow-y="hidden" display="block" src="https://swhitlow.shinyapps.io/groups_shiny/"> </iframe>
 
 <h3 id="application-wage-changes-after-occupational-switches">Application: Wage changes after occupational switches</h3>
 
