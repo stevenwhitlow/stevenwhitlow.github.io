@@ -6,13 +6,13 @@ var store = [{
         "teaser": null
       },{
         "title": "Self-selection of workers across U.S. states",
-        "excerpt":"See the full paper associated with this project here. See the code on GitHub. In this project I examine patterns of immigration in the US and the resulting effect on the locational choices of workers who are born in the US, implementing a standard specification to study the impact of...","categories": ["projects"],
+        "excerpt":"Full paper Github repo In this project I examine patterns of immigration in the US and the resulting effect on the locational choices of workers who are born in the US, implementing a standard specification to study the impact of immigration on workers’ wages at the state level while correcting...","categories": ["projects"],
         "tags": [],
         "url": "/projects/self-selection/",
         "teaser": null
       },{
         "title": "Grade of Membership model of occupational tasks",
-        "excerpt":"See the full paper associated with this project here. See the code on GitHub. To what degree are accumulated skills are transferable across different jobs? Labour market datasets typically include information on the occupations worked by individuals. The Dictionary of Occupational Titles (DOT) and its successor O*NET are two datasets...","categories": ["projects"],
+        "excerpt":"Full paper Github repo Skip to results and interactive demo To what degree are accumulated skills are transferable across different jobs? Labour market datasets typically include information on the occupations worked by individuals. The Dictionary of Occupational Titles (DOT) and its successor O*NET are two datasets from the U.S. Department...","categories": ["projects"],
         "tags": [],
         "url": "/projects/grade-of-membership-occupations/",
         "teaser": null
