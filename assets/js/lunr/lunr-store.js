@@ -16,4 +16,10 @@ var store = [{
         "tags": [],
         "url": "/projects/grade-of-membership-occupations/",
         "teaser": null
+      },{
+        "title": "Simulating the 2022 Ontario election",
+        "excerpt":"Forecast dashboard Github repo I forecasted the results of the 2022 Ontario provincial election using publicly available polling data scraped from the web. The forecast is based on the results of 10,000 simulations and is presented in a dashboard available here. The model sucessfully predicted the overall results of the...","categories": ["projects"],
+        "tags": [],
+        "url": "/projects/ontario-election-forecast/",
+        "teaser": null
       }]

@@ -1,0 +1,520 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Simulating the 2022 Ontario election - Steven Whitlow</title>
+<meta name="description" content="Forecasting the results of the 2022 Ontario provincial election.">
+
+
+  <meta name="author" content="Steven Whitlow">
+  
+  <meta property="article:author" content="Steven Whitlow">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Steven Whitlow">
+<meta property="og:title" content="Simulating the 2022 Ontario election">
+<meta property="og:url" content="/projects/ontario-election-forecast/">
+
+
+  <meta property="og:description" content="Forecasting the results of the 2022 Ontario provincial election.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2022-06-05T02:10:56-04:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="/projects/ontario-election-forecast/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Steven Whitlow",
+      "url": "/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Steven Whitlow Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+<meta name='robots' content='noindex,nofollow' />
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="/"><img src="/assets/img/title.png" alt=" "></a>
+        
+        <a class="site-title" href="/">
+           
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/#about">About</a>
+            </li><li class="masthead__menu-item">
+              <a href="/#projects">Projects</a>
+            </li><li class="masthead__menu-item">
+              <a href="/#blog">Blog</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="/">
+        <img src="/assets/img/avatar.png" alt="Steven Whitlow" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="/" itemprop="url">Steven Whitlow</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Quantitative social scientist</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">Canada</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="mailto:16sjw@queensu.ca" rel="nofollow noopener noreferrer me"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email me</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/stevenwhitlow" rel="nofollow noopener noreferrer me"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+  
+  </div>
+
+
+
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Simulating the 2022 Ontario election">
+    <meta itemprop="description" content="Forecasting the results of the 2022 Ontario provincial election.">
+    <meta itemprop="datePublished" content="2022-06-05T02:10:56-04:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title p-name" itemprop="headline">
+            <a href="/projects/ontario-election-forecast/" class="u-url" itemprop="url">Simulating the 2022 Ontario election
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-keyboard"></i> On this page</h4></header>
+              <ul class="toc__menu"><li><a href="#map-of-forecast">Map of forecast</a></li><li><a href="#technical-details">Technical details</a></li><li><a href="#evaluating-the-forecast">Evaluating the forecast</a><ul><li><a href="#calibration-of-probabilities">Calibration of probabilities</a></li><li><a href="#accuracy-of-model">Accuracy of model</a></li></ul></li></ul>
+
+            </nav>
+          </aside>
+        
+        <style type="text/css">
+.map-container {
+    position: relative;
+    padding-bottom: 56.25%;
+    padding-top: 35px;
+    height: 0;
+    overflow: hidden;
+}
+.map-container iframe {
+    position: absolute;
+    top:0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+</style>
+
+<p><a href="/ontario_election/dashboard.html" class="btn btn--primary"><i class="fa-solid fa-file-lines"></i> Forecast dashboard</a>
+<a href="https://github.com/stevenwhitlow/ontario-2022-simulation" class="btn btn--primary"><i class="fa-brands fa-github"></i> Github repo</a></p>
+
+<p>I forecasted the results of the 2022 Ontario provincial election using publicly available polling data scraped from the web.</p>
+
+<p>The forecast is based on the results of 10,000 simulations and is presented in a dashboard available <a href="/ontario_election/dashboard.html">here</a>.</p>
+
+<p>The model sucessfully predicted the overall results of the election, and the party predicted as the most likely winner in each riding won in 104 out of 124 ridings, giving an accuracy of 84%.</p>
+
+<h2 id="map-of-forecast">Map of forecast</h2>
+
+<div class="map-container">
+    <iframe src="/assets/html/map.html" height="315" width="1000" frameborder="0">
+    </iframe>
+</div>
+
+<h2 id="technical-details">Technical details</h2>
+
+<p>The forecast has four steps:</p>
+
+<p><strong>Step 1</strong>  First, using the polling data, I estimate a Bayesian state space model which treats latent party vote intention over time as a random walk. I pull 10,000 draws from the posterior of the estimated vote intention on the final day to serve as a starting point for each simulation.</p>
+
+<p><strong>Step 2</strong>  Using the estimated provincial vote intention, I estimate regional-level changes in party vote. These changes are modeled as proportional swings from the previous election’s results for each individual party:</p>
+
+<ul>
+  <li>First, I calculate the <strong>estimated provincial swing</strong> by dividing the party’s estimated vote share today by its vote share in the last election.</li>
+  <li>Second, I multiply the party’s vote share in each region in the last election by the estimated provincial swing to obtain the estimated regional swing for each region.</li>
+</ul>
+
+<p>Within each simulation, I add random noise in the swings for every region that is independent across regions but takes into account the correlation structure between vote intention for the various parties that was estimated in the state space model, as well as rescale the estimated vote shares to ensure they sum to 100% in each region.</p>
+
+<p><strong>Step 3</strong>  Using the regional swings, I estimate election results at the riding level using proportional swings calculated identically to the regional swings before, except I use the simulated regional swings calculated before as a starting point.</p>
+
+<p><strong>Step 4</strong> Last, I sum up estimated riding-level results, weighting by the expected votes cast in each riding, to obtain provincial-level vote and seat total estimates for each simulation.</p>
+
+<h2 id="evaluating-the-forecast">Evaluating the forecast</h2>
+
+<h3 id="calibration-of-probabilities">Calibration of probabilities</h3>
+
+<p>The model simulation results provide probabilities that each party will win a given riding. For the prediction to be well calibrated, we want these forecasted probabilities to match the observed probabilities: parties predicted to have a 0% probability of winning a riding should never win, parties predicted to win 50% of the time should win 50% of the time, and so forth.</p>
+
+<p>The graph below shows the predicted probabilities (on the horiziontal axis) against the observed probability of winning. For a perfect model, we would expect the results to follow the green 45° line. The model forecast is close to the 45° line; the areas shaded red indicates deviation from the perfect model.</p>
+
+<figure class="">
+  <img src="/assets/img/ontario-election/ontario_forecast_calibration.png" alt="" /></figure>
+
+<p>The main deviation from a perfectly calibrated model is that in several ridings the model expected a party to win a riding with certainty, but this did not happen. The reason for most of these are riding-specific factors that are explicitly excluded from the model.</p>
+
+<h3 id="accuracy-of-model">Accuracy of model</h3>
+
+<p>To evaluate more where the model made mistakes, let’s examine a simpler version where we predict the winner of each riding to be the party with the highest estimated chance to win.</p>
+
+<p>The graph below graphs the actual results of the election broken out by region, but shades parts of each column with the results projected by this simple model.</p>
+
+<p>It’s clear that although this simple forecast gets the majoriy (84%) of the results right, it overpredicts the number of seats won by the Liberals.</p>
+
+<figure class="">
+  <img src="/assets/img/ontario-election/ontario_forecast_accuracy_regions.png" alt="" /></figure>
+
+<p>Part of this is due to the fact that the Liberals underperformed their polling average. The graph below shows:</p>
+<ul>
+  <li><strong>on the left side</strong> the province-wide projections from the simple forecast</li>
+  <li><strong>on the right side</strong> the projections feeding in the actual province-wide vote shares from election day instead of the model-predicted vote intention.</li>
+</ul>
+
+<figure class="">
+  <img src="/assets/img/ontario-election/ontario_forecast_accuracy.png" alt="" /></figure>
+
+<p>Forecast accuracy increases marginally, improving by 3% and going from 84% to 87%.</p>
+
+<p>The results from this excercise suggest that the bulk of Liberal underperformance relative to the model’s predictions are due to their vote becoming less efficient. While the Liberal vote province-wide was somewhat lower than predicted, what affected their seat count totals was their vote being more spread out across the province relative to 2018.</p>
+
+<p>A second source of error is idiosyncratic riding-specific factors (such as incumbent retirmements) which I explicitly exclude from the forecast model.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#projects" class="page__taxonomy-item p-category" rel="tag">projects</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2022-06-05T02:10:56-04:00">June 5, 2022</time></p>
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/projects/grade-of-membership-occupations/" class="pagination--pager" title="Grade of Membership model of occupational tasks
+">Previous</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-206400049-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-206400049-1', {
+    'cookieExpires': 0,
+    'anonymize_ip': true
+ });
+</script>
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2022 Steven Whitlow. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+         
+
+<script type="text/javascript" async
+	src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_HTMLorMML">
+</script>
+
+<script type="text/x-mathjax-config">
+   MathJax.Hub.Config({
+     extensions: ["tex2jax.js"],
+     jax: ["input/TeX", "output/HTML-CSS"],
+     tex2jax: {
+       inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+       displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+       processEscapes: true
+     },
+     "HTML-CSS": {
+        availableFonts : ["STIX"],
+        preferredFont : "STIX",
+        webFont : "STIX-Web",
+        imageFont : null
+    },
+    TeX: { equationNumbers: { autoNumber: "AMS" } }
+   });
+</script>
+
+  </body>
+</html>
