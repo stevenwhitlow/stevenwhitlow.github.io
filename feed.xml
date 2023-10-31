@@ -1,130 +1,130 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-11-09T19:08:56-05:00</updated><id>/feed.xml</id><title type="html">Steven Whitlow</title><subtitle>Steven Whitlow</subtitle><author><name>Steven Whitlow</name></author><entry><title type="html">Latent Dirichlet Allocation</title><link href="/blog/latent-dirichlet-allocation/" rel="alternate" type="text/html" title="Latent Dirichlet Allocation" /><published>2021-11-14T01:10:56-05:00</published><updated>2021-11-14T01:10:56-05:00</updated><id>/blog/latent-dirichlet-allocation</id><content type="html" xml:base="/blog/latent-dirichlet-allocation/">&lt;h2 id=&quot;text-as-data&quot;&gt;Text as data&lt;/h2&gt;
-&lt;p&gt;Two primary issues:&lt;/p&gt;
-&lt;ol&gt;
-  &lt;li&gt;Converting text data into something we can apply statistical methods to&lt;/li&gt;
-  &lt;li&gt;Dealing with the high dimensonality inherent in text data&lt;/li&gt;
-&lt;/ol&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-10-30T23:51:26-04:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Steven Whitlow</title><subtitle>Steven Whitlow</subtitle><author><name>Steven Whitlow</name></author><entry><title type="html">Latent Dirichlet Allocation</title><link href="http://localhost:4000/blog/latent-dirichlet-allocation/" rel="alternate" type="text/html" title="Latent Dirichlet Allocation" /><published>2021-11-14T01:10:56-05:00</published><updated>2021-11-14T01:10:56-05:00</updated><id>http://localhost:4000/blog/latent-dirichlet-allocation</id><content type="html" xml:base="http://localhost:4000/blog/latent-dirichlet-allocation/"><![CDATA[<h2 id="text-as-data">Text as data</h2>
+<p>Two primary issues:</p>
+<ol>
+  <li>Converting text data into something we can apply statistical methods to</li>
+  <li>Dealing with the high dimensonality inherent in text data</li>
+</ol>
 
-&lt;p&gt;In the literature, a textual dataset is known as a &lt;em&gt;corpus&lt;/em&gt;. Each corpus is composed of \(D\) &lt;em&gt;documents:&lt;/em&gt; \(d \in {1,...,D}\). Each document is represented as collections from a vocabulary of \(W\) different &lt;em&gt;words:&lt;/em&gt; \(w \in {1,...,W}\).&lt;/p&gt;
+<p>In the literature, a textual dataset is known as a <em>corpus</em>. Each corpus is composed of \(D\) <em>documents:</em> \(d \in {1,...,D}\). Each document is represented as collections from a vocabulary of \(W\) different <em>words:</em> \(w \in {1,...,W}\).</p>
 
-&lt;figure class=&quot;&quot;&gt;
-  &lt;img src=&quot;/assets/img/document_diagram.png&quot; alt=&quot;Summary of textual dataset&quot; /&gt;&lt;figcaption&gt;
+<figure class="">
+  <img src="/assets/img/document_diagram.png" alt="Summary of textual dataset" /><figcaption>
       Summary of textual dataset
 
-    &lt;/figcaption&gt;&lt;/figure&gt;
+    </figcaption></figure>
 
-&lt;p&gt;For simplicity, assume each document \(d\) can be written as a sequence of \(N\) words: \(d = {w_{d,1},...,w_{d,N}}\). For most purposes, it is generally acceptable to ignore other elements of a document, such as punctuation, white space, etc. Even ignoring all non-word elements, there is a severe dimensonality problem: each document has \(W \times N\) possiblilities.&lt;/p&gt;
+<p>For simplicity, assume each document \(d\) can be written as a sequence of \(N\) words: \(d = {w_{d,1},...,w_{d,N}}\). For most purposes, it is generally acceptable to ignore other elements of a document, such as punctuation, white space, etc. Even ignoring all non-word elements, there is a severe dimensonality problem: each document has \(W \times N\) possiblilities.</p>
 
-&lt;h3 id=&quot;processing-text&quot;&gt;Processing text&lt;/h3&gt;
+<h3 id="processing-text">Processing text</h3>
 
-&lt;p&gt;One way to reduce the complexity of text documents is to ignore the order of words, known as the &lt;em&gt;bag-of-words&lt;/em&gt; model. Each document is represented as a vector of word counts for each word \(w\). The resulting \(D \times W\) matrix is called the &lt;em&gt;document-term matrix&lt;/em&gt;. In some cases, we might be interested in combinations of words (eg. “labour market”). We can extend the bag-of-words representation to allow for n-grams (collections of \(n\) words).&lt;/p&gt;
+<p>One way to reduce the complexity of text documents is to ignore the order of words, known as the <em>bag-of-words</em> model. Each document is represented as a vector of word counts for each word \(w\). The resulting \(D \times W\) matrix is called the <em>document-term matrix</em>. In some cases, we might be interested in combinations of words (eg. “labour market”). We can extend the bag-of-words representation to allow for n-grams (collections of \(n\) words).</p>
 
-&lt;p&gt;To demonstrate this, let’s go through an example text dataset (reviews of electronics on Amazon) and go through the process of cleaning and developing the document-term matrix using the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;nltk&lt;/code&gt; package from Python.&lt;/p&gt;
+<p>To demonstrate this, let’s go through an example text dataset (reviews of electronics on Amazon) and go through the process of cleaning and developing the document-term matrix using the <code class="language-plaintext highlighter-rouge">nltk</code> package from Python.</p>
 
-&lt;p&gt;Tokenization is the process of splitting a string into individual elements:&lt;/p&gt;
+<p>Tokenization is the process of splitting a string into individual elements:</p>
 
-&lt;figure class=&quot;&quot;&gt;
-  &lt;img src=&quot;/assets/img/text_2.png&quot; alt=&quot;&quot; /&gt;&lt;/figure&gt;
+<figure class="">
+  <img src="/assets/img/text_2.png" alt="" /></figure>
 
-&lt;p&gt;The distribution of words across any type of documents are typically well approximated by a power law distribution. This means the most common words, such as “the” or “and”, will account for a large fraction of the content of any corpus. These words (referred to as &lt;strong&gt;stop words&lt;/strong&gt;) typically reveal little about the contents of a document, so it is common practice to drop them. I use the list of stop words provided by the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;nltk&lt;/code&gt; package.&lt;/p&gt;
+<p>The distribution of words across any type of documents are typically well approximated by a power law distribution. This means the most common words, such as “the” or “and”, will account for a large fraction of the content of any corpus. These words (referred to as <strong>stop words</strong>) typically reveal little about the contents of a document, so it is common practice to drop them. I use the list of stop words provided by the <code class="language-plaintext highlighter-rouge">nltk</code> package.</p>
 
-&lt;p&gt;For example, this specific review consisted of 59 words, but 32 were stop words:&lt;/p&gt;
-&lt;figure class=&quot;&quot;&gt;
-  &lt;img src=&quot;/assets/img/text_3.png&quot; alt=&quot;&quot; /&gt;&lt;/figure&gt;
+<p>For example, this specific review consisted of 59 words, but 32 were stop words:</p>
+<figure class="">
+  <img src="/assets/img/text_3.png" alt="" /></figure>
 
-&lt;p&gt;In the context of an Amazon review, the words “impressed”, 
-“impressing”, and “impress” likely convey the same information. One solution is to apply a &lt;strong&gt;stemmer&lt;/strong&gt;, which reduces words to their stem (in this case, impress). The Porter stemmer algorithm proposed by Porter (1980) is one choice for this. Stemming leaves us with the following tokens for the example review:&lt;/p&gt;
+<p>In the context of an Amazon review, the words “impressed”, 
+“impressing”, and “impress” likely convey the same information. One solution is to apply a <strong>stemmer</strong>, which reduces words to their stem (in this case, impress). The Porter stemmer algorithm proposed by Porter (1980) is one choice for this. Stemming leaves us with the following tokens for the example review:</p>
 
-&lt;figure class=&quot;&quot;&gt;
-  &lt;img src=&quot;/assets/img/text_4.png&quot; alt=&quot;&quot; /&gt;&lt;/figure&gt;
+<figure class="">
+  <img src="/assets/img/text_4.png" alt="" /></figure>
 
-&lt;p&gt;The last step is to determine how to measure the intensity of each word in each document. The simplest way is to use the term frequency, that is, the raw count of how many times a word appears in the document: \(x_{d,w}\). The problem  with this approach is that for most corpora, some words will appear in most or all documents. One way to address this is to weight inverse document frequency:&lt;/p&gt;
+<p>The last step is to determine how to measure the intensity of each word in each document. The simplest way is to use the term frequency, that is, the raw count of how many times a word appears in the document: \(x_{d,w}\). The problem  with this approach is that for most corpora, some words will appear in most or all documents. One way to address this is to weight inverse document frequency:</p>
 
-\[idf_{w} = \log\left(\frac{D}{\sum_{d=1}^{D}1(x_{d,w}&amp;gt;0)}\right).\]
+\[idf_{w} = \log\left(\frac{D}{\sum_{d=1}^{D}1(x_{d,w}&gt;0)}\right).\]
 
-&lt;p&gt;which adjusts the term frequency to increase the weight of terms that appear relatively rarely throughout the corpus.&lt;/p&gt;
+<p>which adjusts the term frequency to increase the weight of terms that appear relatively rarely throughout the corpus.</p>
 
-&lt;p&gt;For the example review, the terms “ipad” and “work” both appear twice, but the resulting tf-idf is 9.243 and 3.992 respectively.&lt;/p&gt;
+<p>For the example review, the terms “ipad” and “work” both appear twice, but the resulting tf-idf is 9.243 and 3.992 respectively.</p>
 
-&lt;h2 id=&quot;latent-dirichlet-allocation&quot;&gt;Latent Dirichlet allocation&lt;/h2&gt;
+<h2 id="latent-dirichlet-allocation">Latent Dirichlet allocation</h2>
 
-&lt;h3 id=&quot;motivation&quot;&gt;Motivation&lt;/h3&gt;
+<h3 id="motivation">Motivation</h3>
 
-&lt;p&gt;In many cases, textual datasets can be very large. For instance, a newspaper article corpus might contain over one billion tokens and over one million unique tokens. Evidently, extreme dimensonality reduction is required. A solution is to keep only the top 250,000 words ranked by the sum of tf-idf, then go back to using the raw counts. At that point, one can use a topic model to extract relationships between documents. Latent Dirichlet allocation is one such topic model proposed by Blei, Jordan and Ng (JMLR, 2003) that allows for unsupervised classification of text data.&lt;/p&gt;
+<p>In many cases, textual datasets can be very large. For instance, a newspaper article corpus might contain over one billion tokens and over one million unique tokens. Evidently, extreme dimensonality reduction is required. A solution is to keep only the top 250,000 words ranked by the sum of tf-idf, then go back to using the raw counts. At that point, one can use a topic model to extract relationships between documents. Latent Dirichlet allocation is one such topic model proposed by Blei, Jordan and Ng (JMLR, 2003) that allows for unsupervised classification of text data.</p>
 
-&lt;p&gt;LDA takes as input the document-term matrix and returns two sets of distributions:&lt;/p&gt;
-&lt;ol&gt;
-  &lt;li&gt;For each document d, a distribution over topics&lt;/li&gt;
-  &lt;li&gt;For each topic k, a distribution over words&lt;/li&gt;
-&lt;/ol&gt;
+<p>LDA takes as input the document-term matrix and returns two sets of distributions:</p>
+<ol>
+  <li>For each document d, a distribution over topics</li>
+  <li>For each topic k, a distribution over words</li>
+</ol>
 
-&lt;h3 id=&quot;baseline-naïve-bayes-mixture-of-unigrams&quot;&gt;Baseline: Naïve Bayes (mixture of unigrams)&lt;/h3&gt;
-&lt;p&gt;The naive Bayes assumption, which can be applied in a topic modelling context by assumping that conditional on topic (class), the words within a document are independent.&lt;/p&gt;
+<h3 id="baseline-naïve-bayes-mixture-of-unigrams">Baseline: Naïve Bayes (mixture of unigrams)</h3>
+<p>The naive Bayes assumption, which can be applied in a topic modelling context by assumping that conditional on topic (class), the words within a document are independent.</p>
 
-&lt;p&gt;Suppose each topic is assigned to a topic \(k \in \{1, \ldots K\}\) with probability \(\theta^{(k)}\), where \(\sum_{k}\theta^{(k)} = 1\). Topics are a mixture over words; i.e., for each word in a document of a given topic \(j\), the probability that a given word \(w\) is chosen is given by:&lt;/p&gt;
+<p>Suppose each topic is assigned to a topic \(k \in \{1, \ldots K\}\) with probability \(\theta^{(k)}\), where \(\sum_{k}\theta^{(k)} = 1\). Topics are a mixture over words; i.e., for each word in a document of a given topic \(j\), the probability that a given word \(w\) is chosen is given by:</p>
 
 \[P(w|k) = \phi_{k}^{(w)}, \quad \forall w \in\{1,\ldots,W\} \text{ and } k \in \{1, \ldots K\},\]
 
-&lt;p&gt;where \(\sum_{w}\phi_{k}^{(w)} = 1 \; \forall \; k\in\{1, \ldots, K\}\).&lt;/p&gt;
+<p>where \(\sum_{w}\phi_{k}^{(w)} = 1 \; \forall \; k\in\{1, \ldots, K\}\).</p>
 
-&lt;p&gt;The probability of each document \(d\):&lt;/p&gt;
+<p>The probability of each document \(d\):</p>
 
 \[p(d) = \sum_{k}p(k) \prod_{n=1}^{N} (w_{n} | k) = \sum_{k} \theta^{(k)} \prod_{n=1}^{N} \phi_{k}^{(w_{n})}\]
 
-&lt;h4 id=&quot;how-do-we-solve-this-model&quot;&gt;How do we solve this model?&lt;/h4&gt;
+<h4 id="how-do-we-solve-this-model">How do we solve this model?</h4>
 
-&lt;p&gt;In the unsupervised case with unlabelled documents, we could use an expectation-maximization algorithm which iterates over:&lt;/p&gt;
+<p>In the unsupervised case with unlabelled documents, we could use an expectation-maximization algorithm which iterates over:</p>
 
-&lt;ol&gt;
-  &lt;li&gt;Expectation step: write log-likelihood as an expectation over unobserved latent values given current parameter estimates&lt;/li&gt;
-  &lt;li&gt;Maximization step: run MLE over the model in (1)&lt;/li&gt;
-&lt;/ol&gt;
+<ol>
+  <li>Expectation step: write log-likelihood as an expectation over unobserved latent values given current parameter estimates</li>
+  <li>Maximization step: run MLE over the model in (1)</li>
+</ol>
 
-&lt;p&gt;After estimating the parameters, it is easy to back out classifications using Bayes’ rule.&lt;/p&gt;
+<p>After estimating the parameters, it is easy to back out classifications using Bayes’ rule.</p>
 
-&lt;h3 id=&quot;lda-motivation&quot;&gt;LDA: motivation&lt;/h3&gt;
+<h3 id="lda-motivation">LDA: motivation</h3>
 
-&lt;p&gt;Latent Dirichlet allocation improves the mixture of unigrams model along two dimensions.&lt;/p&gt;
+<p>Latent Dirichlet allocation improves the mixture of unigrams model along two dimensions.</p>
 
-&lt;ol&gt;
-  &lt;li&gt;
-    &lt;p&gt;LDA takes as input the document-term matrix and returns two sets of distributions. Firstly, each document \(d\) is modelled as a distribution over topics. Each topic \(k\) is still defined as a distribution over words.  Rather than assign each document a unique topic, documents are modelled as multinomial mixtures over topics. The probability of a given word in document \(d\) being part of topic \(k\) is \(\theta_{d}^{(k)}\). Since topics remain mixtures over words, the probability of word \(w\) appearing given topic \(k\) is chosen is still \(\phi_{k}^{(w)}\).&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;LDA places symmetric Dirichlet priors on the probability vectors for document-topic and topic-word shares. In particular, it assigns a \(K\)-dimensional Dirichlet prior with hyperparameter \(\alpha\) to each \(\theta_{d}\) and a \(W\)-dimensional Dirichlet prior with hyperparameter \(\eta\) to each \(\phi_{k}\). The Dirichlet distribution is a “distribution of distributions”: it is over vectors whose values are all in \([0,1]\) and sum to \(1\). This specifies the generative process for documents and smooths estimation.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ol&gt;
+<ol>
+  <li>
+    <p>LDA takes as input the document-term matrix and returns two sets of distributions. Firstly, each document \(d\) is modelled as a distribution over topics. Each topic \(k\) is still defined as a distribution over words.  Rather than assign each document a unique topic, documents are modelled as multinomial mixtures over topics. The probability of a given word in document \(d\) being part of topic \(k\) is \(\theta_{d}^{(k)}\). Since topics remain mixtures over words, the probability of word \(w\) appearing given topic \(k\) is chosen is still \(\phi_{k}^{(w)}\).</p>
+  </li>
+  <li>
+    <p>LDA places symmetric Dirichlet priors on the probability vectors for document-topic and topic-word shares. In particular, it assigns a \(K\)-dimensional Dirichlet prior with hyperparameter \(\alpha\) to each \(\theta_{d}\) and a \(W\)-dimensional Dirichlet prior with hyperparameter \(\eta\) to each \(\phi_{k}\). The Dirichlet distribution is a “distribution of distributions”: it is over vectors whose values are all in \([0,1]\) and sum to \(1\). This specifies the generative process for documents and smooths estimation.</p>
+  </li>
+</ol>
 
-&lt;p&gt;We can write the generative process for LDA as follows:&lt;/p&gt;
+<p>We can write the generative process for LDA as follows:</p>
 
-&lt;ol&gt;
-  &lt;li&gt;Generate each topic \(k\), which is a distribution over words:&lt;/li&gt;
-&lt;/ol&gt;
+<ol>
+  <li>Generate each topic \(k\), which is a distribution over words:</li>
+</ol>
 
 \[\phi_{k} \sim Dirichlet(\eta)\]
 
-&lt;ol&gt;
-  &lt;li&gt;For each document \(d\), generate a distribution over topics&lt;/li&gt;
-&lt;/ol&gt;
+<ol>
+  <li>For each document \(d\), generate a distribution over topics</li>
+</ol>
 
 \[\theta_{d} \sim Dirichlet(\alpha)\]
 
-&lt;ol&gt;
-  &lt;li&gt;
-    &lt;p&gt;For each word \(i\) in document \(d\):&lt;/p&gt;
+<ol>
+  <li>
+    <p>For each word \(i\) in document \(d\):</p>
 
-    &lt;p&gt;3.1. Pick a topic for the word \(k_{d,i}\), drawing from \(Multinomial(\pmb{\theta_{d}})\).
- 3.2. Pick a word from the topic \(w_{d,i}\), drawing from \(Multinomial(\pmb{\phi_{k}})\).&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ol&gt;
+    <p>3.1. Pick a topic for the word \(k_{d,i}\), drawing from \(Multinomial(\pmb{\theta_{d}})\).
+ 3.2. Pick a word from the topic \(w_{d,i}\), drawing from \(Multinomial(\pmb{\phi_{k}})\).</p>
+  </li>
+</ol>
 
-&lt;h3 id=&quot;lda-computation&quot;&gt;LDA: Computation&lt;/h3&gt;
+<h3 id="lda-computation">LDA: Computation</h3>
 
-&lt;p&gt;We can write the log likelihood as \(\sum_{d=1}^{D}\sum_{w=1}^{W}x_{d,w} \log (\sum_{k=1}^{K}\hat{\theta}_{d}^{(k)}\hat{\phi}_{k}^{(w)})\). The hyperparameters \(\alpha\) and \(\eta\) are often set to \(\alpha = \frac{50}{K}\) and \(\eta = \frac{200}{W}\), following Griffiths and Steyvers (PNAS, 2004). This leaves the selection of the value for \(K\); one can use the perplexity score, defined as \(\exp\left(- \frac{\mathcal{L}}{W} \right)\), a common measure in the NLP literature. However, in practice, this is often done on an ad-hoc basis.&lt;/p&gt;
+<p>We can write the log likelihood as \(\sum_{d=1}^{D}\sum_{w=1}^{W}x_{d,w} \log (\sum_{k=1}^{K}\hat{\theta}_{d}^{(k)}\hat{\phi}_{k}^{(w)})\). The hyperparameters \(\alpha\) and \(\eta\) are often set to \(\alpha = \frac{50}{K}\) and \(\eta = \frac{200}{W}\), following Griffiths and Steyvers (PNAS, 2004). This leaves the selection of the value for \(K\); one can use the perplexity score, defined as \(\exp\left(- \frac{\mathcal{L}}{W} \right)\), a common measure in the NLP literature. However, in practice, this is often done on an ad-hoc basis.</p>
 
-&lt;p&gt;Griffiths and Steyvers (2004) popularized the “smoothed” form of the LDA which can be estimated using Gibbs sampling. This is a MCMC approach used when the distribution to sample from is intractable, but sampling variables conditional on all others is not. When we have Dirichlet priors over both \(\theta\) and \(\phi\), we can use &lt;em&gt;collapsed&lt;/em&gt; Gibbs sampling: since the priors are conjugate, they can be integrated out of the joint distribution. This means we only need to sample the topics \(k_{d,i}\).&lt;/p&gt;
+<p>Griffiths and Steyvers (2004) popularized the “smoothed” form of the LDA which can be estimated using Gibbs sampling. This is a MCMC approach used when the distribution to sample from is intractable, but sampling variables conditional on all others is not. When we have Dirichlet priors over both \(\theta\) and \(\phi\), we can use <em>collapsed</em> Gibbs sampling: since the priors are conjugate, they can be integrated out of the joint distribution. This means we only need to sample the topics \(k_{d,i}\).</p>
 
-&lt;!--
+<!--
 ## Conclusion
 
 You’ll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run `jekyll serve`, which launches a web server and auto-regenerates your site when a file is updated.
@@ -136,27 +136,27 @@ Jekyll requires blog post files to be named according to the following format:
 Where `YEAR` is a four-digit number, `MONTH` and `DAY` are both two-digit numbers, and `MARKUP` is the file extension representing the format used in the file. After that, include the necessary front matter. Take a look at the source for this post to get an idea about how it works.
 
 Jekyll also offers powerful support for code snippets:
-&lt;details&gt;
-  &lt;summary&gt;Code:&lt;/summary&gt;
+<details>
+  <summary>Code:</summary>
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;&lt;span class=&quot;n&quot;&gt;ggplot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;inner_join&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sankey_data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mode_and_wage_changes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-       &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;aes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;axis1&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mode_former&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-           &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;axis2&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mode_current&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-           &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;total&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-  &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;geom_alluvium&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;aes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fill&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;change_wage&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-  &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;geom_stratum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;alpha&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0.1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-  &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;geom_text&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;stat&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;stratum&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; 
-            &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;label.strata&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;TRUE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-  &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;scale_x_discrete&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;limits&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Pre-displacement \n primary type&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Post-displacement \n primary type&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-                   &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;expand&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;-0.3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0.3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-  &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;guides&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fill&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;guide_legend&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;unname&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;TeX&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;$\\Delta w$&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))))&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-  &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;labs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Share of total&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-  &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;theme_minimal&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;scale_fill_fermenter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;palette&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;YlGnBu&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;limits&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;-0.3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0.3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;#scale_fill_viridis_b(limits = c(-0.3, 0.3)) +&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-  &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;theme&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;text&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;element_text&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;16&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;family&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Palatino&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;legend.position&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;bottom&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">ggplot</span><span class="p">(</span><span class="n">inner_join</span><span class="p">(</span><span class="n">sankey_data</span><span class="p">,</span><span class="n">mode_and_wage_changes</span><span class="p">),</span><span class="w">
+       </span><span class="n">aes</span><span class="p">(</span><span class="n">axis1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mode_former</span><span class="p">,</span><span class="w">
+           </span><span class="n">axis2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mode_current</span><span class="p">,</span><span class="w">
+           </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">total</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_alluvium</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">change_wage</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_stratum</span><span class="p">(</span><span class="n">alpha</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.1</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_text</span><span class="p">(</span><span class="n">stat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"stratum"</span><span class="p">,</span><span class="w"> 
+            </span><span class="n">label.strata</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">scale_x_discrete</span><span class="p">(</span><span class="n">limits</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"Pre-displacement \n primary type"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Post-displacement \n primary type"</span><span class="p">),</span><span class="w">
+                   </span><span class="n">expand</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">-0.3</span><span class="p">,</span><span class="w"> </span><span class="m">0.3</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">guides</span><span class="p">(</span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">guide_legend</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="n">unname</span><span class="p">(</span><span class="n">TeX</span><span class="p">(</span><span class="s2">"$\\Delta w$"</span><span class="p">))))</span><span class="o">+</span><span class="w">
+  </span><span class="n">labs</span><span class="p">(</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Share of total"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">theme_minimal</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">scale_fill_fermenter</span><span class="p">(</span><span class="n">palette</span><span class="o">=</span><span class="s2">"YlGnBu"</span><span class="p">,</span><span class="w"> </span><span class="n">limits</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">-0.3</span><span class="p">,</span><span class="w"> </span><span class="m">0.3</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="c1">#scale_fill_viridis_b(limits = c(-0.3, 0.3)) +</span><span class="w">
+  </span><span class="n">theme</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">element_text</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="m">16</span><span class="p">,</span><span class="w"> </span><span class="n">family</span><span class="o">=</span><span class="s2">"Palatino"</span><span class="p">),</span><span class="w"> </span><span class="n">legend.position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"bottom"</span><span class="p">)</span></code></pre></figure>
 
-&lt;/details&gt; &lt;br /&gt;
+</details> <br />
 Check out the [Jekyll docs][jekyll-docs] for more info on how to get the most out of Jekyll. File all bugs/feature requests at [Jekyll’s GitHub repo][jekyll-gh]. If you have questions, you can ask them on [Jekyll Talk][jekyll-talk].
 
 [jekyll-docs]: https://jekyllrb.com/docs/home
 [jekyll-gh]:   https://github.com/jekyll/jekyll
-[jekyll-talk]: https://talk.jekyllrb.com/ --&gt;</content><author><name>Steven Whitlow</name></author><category term="blog" /><summary type="html">This blog post provides a primer on the processing of text for document classification and introduces Naive Bayes and LDA as document classifcation methods.</summary></entry></feed>
+[jekyll-talk]: https://talk.jekyllrb.com/ -->]]></content><author><name>Steven Whitlow</name></author><category term="blog" /><summary type="html"><![CDATA[This blog post provides a primer on the processing of text for document classification and introduces Naive Bayes and LDA as document classifcation methods.]]></summary></entry></feed>
